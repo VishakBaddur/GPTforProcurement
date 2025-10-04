@@ -13,6 +13,7 @@ import POPreview from '../components/POPreview';
 import PitchModeButton from '../components/PitchModeButton';
 import CountdownTimer from '../components/CountdownTimer';
 import ConfettiAnimation from '../components/ConfettiAnimation';
+import LandingPage from '../components/LandingPage';
 import { ParsedSlots } from '../utils/parseRequest';
 import { generateCommentary } from '../utils/commentaryTemplates';
 
@@ -53,6 +54,7 @@ interface AuctionStatus {
 }
 
 export default function HomePage() {
+  const [showLanding, setShowLanding] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [parsedSlots, setParsedSlots] = useState<ParsedSlots | null>(null);
   const [auctionId, setAuctionId] = useState<string | null>(null);
@@ -75,6 +77,10 @@ export default function HomePage() {
       if (commentaryRef.current) clearInterval(commentaryRef.current);
     };
   }, []);
+
+  const handleStartChat = () => {
+    setShowLanding(false);
+  };
 
   const addMessage = (text: string, isUser: boolean, isTyping = false) => {
     const message: Message = {
@@ -237,6 +243,11 @@ export default function HomePage() {
       setIsPitchMode(false);
     }, 90000); // 90 seconds
   };
+
+  // Show landing page initially
+  if (showLanding) {
+    return <LandingPage onStartChat={handleStartChat} />;
+  }
 
   return (
     <div className="min-h-screen bg-procurvv-bg text-procurvv-text">
