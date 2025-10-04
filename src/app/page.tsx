@@ -11,6 +11,8 @@ import BiddingFeed from '../components/BiddingFeed';
 import ResultsModal from '../components/ResultsModal';
 import POPreview from '../components/POPreview';
 import PitchModeButton from '../components/PitchModeButton';
+import CountdownTimer from '../components/CountdownTimer';
+import ConfettiAnimation from '../components/ConfettiAnimation';
 import { ParsedSlots } from '../utils/parseRequest';
 import { generateCommentary } from '../utils/commentaryTemplates';
 
@@ -61,6 +63,7 @@ export default function HomePage() {
   const [isPitchMode, setIsPitchMode] = useState(false);
   const [currentCommentary, setCurrentCommentary] = useState('');
   const [isCommentaryTyping, setIsCommentaryTyping] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   
   const auctionRef = useRef<NodeJS.Timeout | null>(null);
   const commentaryRef = useRef<NodeJS.Timeout | null>(null);
@@ -169,7 +172,8 @@ export default function HomePage() {
         // Check if auction ended
         if (status.status === 'ended') {
           clearInterval(auctionRef.current!);
-          setShowResults(true);
+          setShowConfetti(true);
+          setTimeout(() => setShowResults(true), 1000);
         }
       } catch (error) {
         console.error('Error polling auction status:', error);
@@ -319,23 +323,38 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
+            className="space-y-6 mb-8"
           >
-            {/* Vendor List */}
-            <div className="lg:col-span-2">
-              <VendorList
-                vendors={auctionStatus.vendors}
-                leaderId={auctionStatus.leader?.id}
-              />
-            </div>
+            {/* Countdown Timer */}
+            {auctionStatus.startedAt && auctionStatus.endsAt && (
+              <div className="flex justify-center">
+                <CountdownTimer
+                  endTime={new Date(auctionStatus.endsAt)}
+                  onTimeUp={() => {
+                    setShowConfetti(true);
+                    setTimeout(() => setShowResults(true), 1000);
+                  }}
+                />
+              </div>
+            )}
             
-            {/* Commentary */}
-            <div>
-              <CommentaryBox
-                commentary={currentCommentary}
-                isTyping={isCommentaryTyping}
-                round={auctionStatus.round}
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Vendor List */}
+              <div className="lg:col-span-2">
+                <VendorList
+                  vendors={auctionStatus.vendors}
+                  leaderId={auctionStatus.leader?.id}
+                />
+              </div>
+              
+              {/* Commentary */}
+              <div>
+                <CommentaryBox
+                  commentary={currentCommentary}
+                  isTyping={isCommentaryTyping}
+                  round={auctionStatus.round}
+                />
+              </div>
             </div>
           </motion.div>
         )}
@@ -414,6 +433,9 @@ export default function HomePage() {
         onStartPitchMode={startPitchMode}
         isRunning={isPitchMode}
       />
+
+      {/* Confetti Animation */}
+      <ConfettiAnimation isActive={showConfetti} />
     </div>
   );
 }

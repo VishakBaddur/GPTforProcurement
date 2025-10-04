@@ -1,0 +1,69 @@
+'use client';
+
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+interface ConfettiAnimationProps {
+  isActive: boolean;
+}
+
+export default function ConfettiAnimation({ isActive }: ConfettiAnimationProps) {
+  useEffect(() => {
+    if (isActive) {
+      // Create confetti effect
+      const createConfetti = () => {
+        const colors = ['#00bfff', '#ff6f61', '#10b981', '#f59e0b', '#8b5cf6'];
+        const confettiCount = 50;
+        
+        for (let i = 0; i < confettiCount; i++) {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.top = '-10px';
+          confetti.style.width = '10px';
+          confetti.style.height = '10px';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.borderRadius = '50%';
+          confetti.style.pointerEvents = 'none';
+          confetti.style.zIndex = '9999';
+          
+          document.body.appendChild(confetti);
+          
+          // Animate confetti falling
+          confetti.animate([
+            { transform: 'translateY(0px) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(100vh) rotate(360deg)`, opacity: 0 }
+          ], {
+            duration: 3000 + Math.random() * 2000,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+          }).onfinish = () => {
+            confetti.remove();
+          };
+        }
+      };
+      
+      createConfetti();
+    }
+  }, [isActive]);
+
+  if (!isActive) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 pointer-events-none z-50"
+    >
+      {/* Success overlay */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl"
+      >
+        🎉
+      </motion.div>
+    </motion.div>
+  );
+}
