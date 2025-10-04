@@ -327,6 +327,8 @@ export default function HomePage() {
                   onTimeUp={() => {
                     setShowConfetti(true);
                     setTimeout(() => setShowResults(true), 1000);
+                    // Turn off confetti after 3 seconds
+                    setTimeout(() => setShowConfetti(false), 3000);
                   }}
                 />
               </div>
