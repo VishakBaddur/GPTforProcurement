@@ -4,10 +4,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface LandingPageProps {
-  onStartChat: () => void;
+  onStartChat: (text?: string) => void;
 }
 
 export default function LandingPage({ onStartChat }: LandingPageProps) {
+  const [inputValue, setInputValue] = React.useState('');
+
+  const handleSubmit = () => {
+    onStartChat(inputValue.trim() || undefined);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-procurvv-bg via-procurvv-bg to-procurvv-card">
       {/* Header */}
@@ -94,11 +100,13 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
           <div className="relative">
             <input
               type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               placeholder="A whole new way for reverse auction"
               className="w-full bg-procurvv-card border border-procurvv-border rounded-lg px-4 py-4 text-procurvv-text placeholder-procurvv-muted focus:outline-none focus:ring-2 focus:ring-procurvv-accent focus:border-transparent"
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                  onStartChat();
+                  handleSubmit();
                 }
               }}
             />
@@ -109,7 +117,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             </div>
             
             <button
-              onClick={onStartChat}
+              onClick={handleSubmit}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-procurvv-accent hover:text-procurvv-text transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

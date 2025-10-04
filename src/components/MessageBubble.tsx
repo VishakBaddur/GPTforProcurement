@@ -53,7 +53,7 @@ export default function MessageBubble({ message, isUser, timestamp, isTyping = f
               <p className="text-sm leading-relaxed">{message}</p>
               {timestamp && (
                 <p className={`text-xs mt-1 ${isUser ? 'text-[#98a0a6]' : 'text-white/70'}`}>
-                  {timestamp.toLocaleTimeString()}
+                  {timestamp instanceof Date ? timestamp.toLocaleTimeString() : new Date(timestamp).toLocaleTimeString()}
                 </p>
               )}
             </div>

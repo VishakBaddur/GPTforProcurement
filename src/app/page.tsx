@@ -78,8 +78,14 @@ export default function HomePage() {
     };
   }, []);
 
-  const handleStartChat = () => {
+  const handleStartChat = (text?: string) => {
     setShowLanding(false);
+    if (text) {
+      // If text is provided, send it as a message
+      setTimeout(() => {
+        handleSendMessage(text);
+      }, 100);
+    }
   };
 
   const addMessage = (text: string, isUser: boolean, isTyping = false) => {
