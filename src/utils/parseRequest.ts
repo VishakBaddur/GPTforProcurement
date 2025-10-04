@@ -34,7 +34,7 @@ export function parseRequest(text: string): ParsedSlots {
     maxBudget, 
     deliveryDays, 
     warranty: warrantyMatch ? warrantyMatch[0] : null,
-    warrantyMonths
+    warrantyMonths: warrantyMonths || undefined
   };
 }
 

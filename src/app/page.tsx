@@ -31,8 +31,22 @@ interface AuctionStatus {
     bid: number;
     isCompliant: boolean;
   };
-  vendors: any[];
-  events: any[];
+  vendors: Array<{
+    id: string;
+    name: string;
+    currentBid: number;
+    isCompliant: boolean;
+    complianceScore: number;
+    bidHistory: number[];
+  }>;
+  events: Array<{
+    type: string;
+    vendorId?: string;
+    amount?: number;
+    round?: number;
+    timestamp: Date;
+    message: string;
+  }>;
   totalBids: number;
 }
 
