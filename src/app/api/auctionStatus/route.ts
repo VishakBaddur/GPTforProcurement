@@ -1,22 +1,19 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { auctionEngine } from '../../utils/auctionEngine';
+import { NextRequest, NextResponse } from 'next/server';
+import { auctionEngine } from '../../../utils/auctionEngine';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { auctionId } = req.query;
-  
-  if (!auctionId || typeof auctionId !== 'string') {
-    return res.status(400).json({ error: 'Auction ID is required' });
-  }
-
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const auctionId = searchParams.get('auctionId');
+    
+    if (!auctionId) {
+      return NextResponse.json({ error: 'Auction ID is required' }, { status: 400 });
+    }
+
     const auction = auctionEngine.getAuctionStatus(auctionId);
     
     if (!auction) {
-      return res.status(404).json({ error: 'Auction not found' });
+      return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
     }
 
     // Get current leader
@@ -28,7 +25,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     // Get recent events (last 10)
     const recentEvents = auction.events.slice(-10);
 
-    res.status(200).json({
+    return NextResponse.json({
       status: auction.status,
       round: auction.rounds,
       leader: leader ? {
@@ -52,6 +49,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   } catch (error) {
     console.error('Auction status error:', error);
-    res.status(500).json({ error: 'Failed to get auction status' });
+    return NextResponse.json({ error: 'Failed to get auction status' }, { status: 500 });
   }
 }
