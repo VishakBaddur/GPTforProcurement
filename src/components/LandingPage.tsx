@@ -9,9 +9,22 @@ interface LandingPageProps {
 
 export default function LandingPage({ onStartChat }: LandingPageProps) {
   const [inputValue, setInputValue] = React.useState('');
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleSubmit = () => {
     onStartChat(inputValue.trim() || undefined);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // For demo purposes, we'll just show the filename
+      onStartChat(`📎 Uploaded file: ${file.name}`);
+    }
+  };
+
+  const handleAttachmentClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -113,7 +126,20 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             
             {/* Icons */}
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-3">
-              <span className="text-procurvv-muted">📎</span>
+              <button
+                onClick={handleAttachmentClick}
+                className="text-procurvv-muted hover:text-procurvv-text transition-colors"
+                title="Upload vendor list or requirements file"
+              >
+                📎
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".csv,.xlsx,.xls,.json,.txt"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
             </div>
             
             <button

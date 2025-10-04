@@ -1,5 +1,8 @@
 [
   {"id":"v1","name":"ErgoSupply","basePrice":125,"minAcceptable":88,"aggressiveness":0.05,"warrantyMonths":12,"maxDeliveryDays":28},
   {"id":"v2","name":"Chairly","basePrice":130,"minAcceptable":91,"aggressiveness":0.06,"warrantyMonths":6,"maxDeliveryDays":25},
-  {"id":"v3","name":"SitWell Inc.","basePrice":122,"minAcceptable":85,"aggressiveness":0.04,"warrantyMonths":24,"maxDeliveryDays":30}
+  {"id":"v3","name":"SitWell Inc.","basePrice":122,"minAcceptable":85,"aggressiveness":0.04,"warrantyMonths":24,"maxDeliveryDays":30},
+  {"id":"v4","name":"OfficeMax Pro","basePrice":135,"minAcceptable":95,"aggressiveness":0.07,"warrantyMonths":18,"maxDeliveryDays":21},
+  {"id":"v5","name":"Furniture Direct","basePrice":128,"minAcceptable":90,"aggressiveness":0.06,"warrantyMonths":15,"maxDeliveryDays":35},
+  {"id":"v6","name":"Corporate Solutions","basePrice":140,"minAcceptable":98,"aggressiveness":0.08,"warrantyMonths":36,"maxDeliveryDays":20}
 ]
