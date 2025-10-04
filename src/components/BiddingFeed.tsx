@@ -58,7 +58,7 @@ export default function BiddingFeed({ events, maxEvents = 20 }: BiddingFeedProps
         <AnimatePresence>
           {recentEvents.map((event, index) => (
             <motion.div
-              key={`${event.timestamp.getTime()}-${index}`}
+              key={`${event.timestamp instanceof Date ? event.timestamp.getTime() : new Date(event.timestamp).getTime()}-${index}`}
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -20, scale: 0.95 }}
@@ -73,7 +73,7 @@ export default function BiddingFeed({ events, maxEvents = 20 }: BiddingFeedProps
                   {event.message}
                 </p>
                 <p className="text-xs text-procurvv-muted mt-1">
-                  {event.timestamp.toLocaleTimeString()}
+                  {event.timestamp instanceof Date ? event.timestamp.toLocaleTimeString() : new Date(event.timestamp).toLocaleTimeString()}
                 </p>
               </div>
               {event.amount && (
