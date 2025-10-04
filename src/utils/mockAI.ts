@@ -16,46 +16,86 @@ export function generateAIResponse(text: string, slots: ParsedSlots): AIResponse
   const hasBudget = !!(slots.budget || slots.maxBudget);
   const hasDelivery = !!slots.deliveryDays;
   
+  // Count how many fields we have
+  const fieldCount = [hasItem, hasQuantity, hasBudget, hasDelivery].filter(Boolean).length;
+  
+  // If we have at least 3 out of 4 fields, we're good to proceed
+  if (fieldCount >= 3) {
+    const confirmations = [
+      "Perfect! I've parsed your procurement requirements. Let me set up a reverse auction for you.",
+      "Got it! I understand your needs. Ready to start the auction process.",
+      "Excellent! I've captured all the details. Time to find you the best deal.",
+      "All set! Your requirements are clear. Let's get the best vendors competing for your business."
+    ];
+    
+    return {
+      action: 'preview',
+      message: confirmations[Math.floor(Math.random() * confirmations.length)],
+      slots
+    };
+  }
+  
+  // If we have 2 or more fields, ask for the most important missing one
+  if (fieldCount >= 2) {
+    if (!hasItem) {
+      return {
+        action: 'clarify',
+        message: "What item or service are you looking to procure?"
+      };
+    }
+    if (!hasQuantity) {
+      return {
+        action: 'clarify',
+        message: "How many units do you need?"
+      };
+    }
+    if (!hasBudget) {
+      return {
+        action: 'clarify',
+        message: "What's your budget for this procurement?"
+      };
+    }
+    if (!hasDelivery) {
+      return {
+        action: 'clarify',
+        message: "When do you need delivery?"
+      };
+    }
+  }
+  
+  // If we have less than 2 fields, ask for the most critical ones
   if (!hasItem) {
     return {
       action: 'clarify',
-      message: "I didn't catch what you're looking to procure. Could you specify the item or service you need?"
+      message: "What item or service are you looking to procure?"
     };
   }
   
   if (!hasQuantity) {
     return {
       action: 'clarify',
-      message: "I didn't catch the quantity — how many units do you need?"
+      message: "How many units do you need?"
     };
   }
   
   if (!hasBudget) {
     return {
       action: 'clarify',
-      message: "What's your budget range for this procurement?"
+      message: "What's your budget for this procurement?"
     };
   }
   
   if (!hasDelivery) {
     return {
       action: 'clarify',
-      message: "When do you need delivery? Please specify the timeframe."
+      message: "When do you need delivery?"
     };
   }
   
-  // Generate confirmation message
-  const confirmations = [
-    "Perfect! I've parsed your procurement requirements. Let me set up a reverse auction for you.",
-    "Got it! I understand your needs. Ready to start the auction process.",
-    "Excellent! I've captured all the details. Time to find you the best deal.",
-    "All set! Your requirements are clear. Let's get the best vendors competing for your business."
-  ];
-  
+  // Fallback
   return {
-    action: 'preview',
-    message: confirmations[Math.floor(Math.random() * confirmations.length)],
-    slots
+    action: 'clarify',
+    message: "I need a bit more information. Could you tell me what you're looking to procure, how many you need, your budget, and when you need delivery?"
   };
 }
 

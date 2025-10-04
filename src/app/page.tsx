@@ -263,26 +263,7 @@ export default function HomePage() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-16">
-        {/* Main Content */}
-        <div className="text-center mb-12">
-          {/* Tag */}
-          <div className="inline-flex items-center space-x-2 bg-procurvv-card border border-procurvv-border rounded-full px-4 py-2 mb-8">
-            <span className="text-white">✨</span>
-            <span className="text-procurvv-text text-sm">ChatGPT for Procurement</span>
-          </div>
-          
-          {/* Main Heading */}
-          <h1 className="text-5xl font-bold text-procurvv-text mb-6">
-            Run a reverse e-auction in chat
-          </h1>
-          
-          {/* Sub-text */}
-          <p className="text-xl text-procurvv-muted mb-12 max-w-2xl mx-auto">
-            Launch a competitive <span className="text-procurvv-accent">e-auction</span> in minutes. Join waitlist to unlock <span className="text-procurvv-accent">3 free reverse events</span>
-          </p>
-        </div>
-
-        {/* Chat Section */}
+        {/* Chat Interface - Main Focus */}
         <div className="mb-8">
           <div className="space-y-4 mb-6">
             <AnimatePresence>
@@ -298,14 +279,10 @@ export default function HomePage() {
             </AnimatePresence>
           </div>
           
-          <div className="text-center mb-4">
-            <p className="text-procurvv-muted">Your Chat Assistant for Procurement</p>
-          </div>
-          
           <ChatBox
             onSendMessage={handleSendMessage}
             disabled={isLoading || isPitchMode}
-            placeholder="A whole new way for reverse auction"
+            placeholder="Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"
           />
         </div>
 
@@ -338,16 +315,16 @@ export default function HomePage() {
               </div>
             )}
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Vendor List */}
-              <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* LEFT SIDE - Vendor List (Live Bid Table) */}
+              <div>
                 <VendorList
                   vendors={auctionStatus.vendors}
                   leaderId={auctionStatus.leader?.id}
                 />
               </div>
               
-              {/* Commentary */}
+              {/* RIGHT SIDE - AI Commentary Box */}
               <div>
                 <CommentaryBox
                   commentary={currentCommentary}

@@ -22,7 +22,7 @@ export default function BiddingFeed({ events, maxEvents = 20 }: BiddingFeedProps
   
   const getEventIcon = (type: string) => {
     switch (type) {
-      case 'vendor_joined': return '👥';
+      case 'vendor_joined': return '🟢';
       case 'bid_submitted': return '⬇️';
       case 'leader_changed': return '🏆';
       case 'round_started': return '⏱️';

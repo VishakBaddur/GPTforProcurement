@@ -9,15 +9,45 @@ export interface ParsedSlots {
 }
 
 export function parseRequest(text: string): ParsedSlots {
-  const qtyMatch = text.match(/(\d{1,6})\s*(units|pieces|pcs|items)/i);
+  // More flexible quantity parsing - just look for numbers
+  const qtyMatch = text.match(/(\d{1,6})(?:\s*(?:units|pieces|pcs|items|chairs|desks|tables|etc\.?))?/i);
   const qty = qtyMatch ? parseInt(qtyMatch[1], 10) : null;
 
-  const budgetRangeMatch = text.match(/(?:budget|under|below|<=)\s*\$?(\d+(?:\.\d+)?)(?:\s*-\s*\$?(\d+(?:\.\d+)?))?/i);
-  const budget = budgetRangeMatch ? parseFloat(budgetRangeMatch[1]) : null;
-  const maxBudget = budgetRangeMatch && budgetRangeMatch[2] ? parseFloat(budgetRangeMatch[2]) : budget;
+  // More flexible budget parsing
+  const budgetPatterns = [
+    /(?:budget|my budget)\s*(?:is\s*)?\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
+    /under\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
+    /below\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
+    /<=?\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
+    /\$(\d+(?:,\d{3})*(?:\.\d+)?)/i
+  ];
+  
+  let budget = null;
+  for (const pattern of budgetPatterns) {
+    const match = text.match(pattern);
+    if (match) {
+      budget = parseFloat(match[1].replace(/,/g, ''));
+      break;
+    }
+  }
 
-  const deliveryMatch = text.match(/(\d+)\s*(days|weeks)/i);
-  const deliveryDays = deliveryMatch ? (deliveryMatch[2].toLowerCase().startsWith('week') ? parseInt(deliveryMatch[1])*7 : parseInt(deliveryMatch[1])) : null;
+  // More flexible delivery parsing
+  const deliveryPatterns = [
+    /(\d+)\s*(?:days?|d)/i,
+    /(\d+)\s*(?:weeks?|w)/i,
+    /within\s*(\d+)\s*(?:days?|weeks?)/i,
+    /in\s*(\d+)\s*(?:days?|weeks?)/i
+  ];
+  
+  let deliveryDays = null;
+  for (const pattern of deliveryPatterns) {
+    const match = text.match(pattern);
+    if (match) {
+      const value = parseInt(match[1]);
+      deliveryDays = text.toLowerCase().includes('week') ? value * 7 : value;
+      break;
+    }
+  }
 
   const warrantyMatch = text.match(/(\d+)\s*(year|years|month|months)/i);
   const warrantyMonths = warrantyMatch ? 
@@ -39,17 +69,33 @@ export function parseRequest(text: string): ParsedSlots {
 }
 
 function extractItemFromText(text: string): string | null {
+  // Common procurement items
+  const commonItems = [
+    'chairs', 'desks', 'tables', 'computers', 'laptops', 'monitors', 'printers',
+    'phones', 'headsets', 'keyboards', 'mice', 'servers', 'storage', 'networking',
+    'software', 'licenses', 'office supplies', 'stationery', 'furniture',
+    'equipment', 'machinery', 'tools', 'vehicles', 'uniforms', 'safety gear'
+  ];
+  
+  // First, try to find common items
+  for (const item of commonItems) {
+    if (text.toLowerCase().includes(item)) {
+      return item;
+    }
+  }
+  
   // Remove common procurement keywords and numbers
   const cleaned = text
-    .replace(/\b(?:need|want|require|looking for|procure|purchase|buy)\b/gi, '')
-    .replace(/\b(?:budget|under|below|<=|delivery|warranty|days|weeks|months|years)\b/gi, '')
-    .replace(/\b\d+\s*(?:units|pieces|pcs|items)\b/gi, '')
-    .replace(/\$\d+(?:\.\d+)?/g, '')
+    .replace(/\b(?:need|want|require|looking for|procure|purchase|buy|i want|i need)\b/gi, '')
+    .replace(/\b(?:budget|my budget|under|below|<=|delivery|warranty|days|weeks|months|years)\b/gi, '')
+    .replace(/\b\d+\s*(?:units|pieces|pcs|items|chairs|desks|tables)\b/gi, '')
+    .replace(/\$\d+(?:,\d{3})*(?:\.\d+)?/g, '')
     .replace(/\b\d+\s*(?:days|weeks|months|years)\b/gi, '')
+    .replace(/\b(?:within|in)\s*\d+\s*(?:days|weeks)\b/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
 
-  return cleaned.length > 3 ? cleaned : null;
+  return cleaned.length > 2 ? cleaned : null;
 }
 
 export function validateSlots(slots: ParsedSlots): { isValid: boolean; missingFields: string[] } {

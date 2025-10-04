@@ -1,14 +1,14 @@
 export const templates = [
-  "Round {r}: {leader} leads at ${price}. {second} is {diff}% behind.",
-  "{vendor} lowered to ${price}, now {gap}% ahead of the next competitor.",
-  "If {vendor} drops ${delta}, they will overtake {leader}.",
-  "No vendor changed their bid this round — auction is stabilizing.",
-  "Warning: {vendor} bid at ${price} but warranty {warranty} months does not meet required {reqWarranty} months.",
+  "Round {r}: {leader} leads at ${price}, {diff}% below average.",
+  "{vendor} is closing in — now only ${delta} behind.",
+  "{vendor} holds strong with best compliance terms.",
   "Competition is heating up! {vendor} just undercut {leader} by ${delta}.",
   "The market is responding well to your requirements. {count} vendors are actively competing.",
   "{vendor} is holding steady at ${price} while others adjust their strategies.",
   "Price discovery is working — we're seeing realistic market valuations.",
-  "All vendors are now within your budget range. Great procurement strategy!"
+  "All vendors are now within your budget range. Great procurement strategy!",
+  "Round {r}: {leader} leads at ${price}. {second} is {diff}% behind.",
+  "If {vendor} drops ${delta}, they will overtake {leader}."
 ];
 
 export function generateCommentary(

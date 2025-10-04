@@ -33,6 +33,15 @@ export default function ParsedSummaryCard({ slots, onStartAuction, onEdit, isLoa
           )}
         </div>
         
+        <div className="mb-4 p-3 bg-procurvv-bg rounded-lg">
+          <p className="text-procurvv-text text-sm">
+            Got it — {slots.quantity} {slots.item}, budget ${slots.budget}/unit, delivery within {slots.deliveryDays} days.
+          </p>
+          <p className="text-procurvv-accent text-sm font-medium mt-1">
+            Shall I start a reverse auction?
+          </p>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div className="bg-procurvv-bg rounded-lg p-4">
             <div className="text-sm text-procurvv-muted mb-1">Quantity</div>
