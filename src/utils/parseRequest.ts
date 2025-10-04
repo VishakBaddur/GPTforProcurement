@@ -69,33 +69,41 @@ export function parseRequest(text: string): ParsedSlots {
 }
 
 function extractItemFromText(text: string): string | null {
-  // Common procurement items
-  const commonItems = [
-    'chairs', 'desks', 'tables', 'computers', 'laptops', 'monitors', 'printers',
-    'phones', 'headsets', 'keyboards', 'mice', 'servers', 'storage', 'networking',
-    'software', 'licenses', 'office supplies', 'stationery', 'furniture',
-    'equipment', 'machinery', 'tools', 'vehicles', 'uniforms', 'safety gear'
+  // First, try to extract item from common patterns
+  const itemPatterns = [
+    // "I need 100 laptops" -> "laptops"
+    /(?:need|want|require|looking for|procure|purchase|buy)\s+(?:\d+\s+)?([a-zA-Z\s]+?)(?:\s+(?:within|in|under|below|budget|\$|\d+\s*(?:days|weeks|months|years)))/i,
+    // "100 ergonomic chairs" -> "ergonomic chairs"  
+    /(?:\d+\s+)([a-zA-Z\s]+?)(?:\s+(?:within|in|under|below|budget|\$|\d+\s*(?:days|weeks|months|years)))/i,
+    // "chairs for office" -> "chairs"
+    /([a-zA-Z\s]+?)(?:\s+(?:for|with|that|which))/i,
+    // Direct item mention
+    /(?:i want|i need)\s+([a-zA-Z\s]+?)(?:\s+(?:within|in|under|below|budget|\$|\d+\s*(?:days|weeks|months|years)))/i
   ];
   
-  // First, try to find common items
-  for (const item of commonItems) {
-    if (text.toLowerCase().includes(item)) {
-      return item;
+  for (const pattern of itemPatterns) {
+    const match = text.match(pattern);
+    if (match && match[1]) {
+      const item = match[1].trim();
+      if (item.length > 2 && item.length < 50) {
+        return item;
+      }
     }
   }
   
-  // Remove common procurement keywords and numbers
+  // Fallback: Remove all known keywords and numbers, what's left is the item
   const cleaned = text
     .replace(/\b(?:need|want|require|looking for|procure|purchase|buy|i want|i need)\b/gi, '')
     .replace(/\b(?:budget|my budget|under|below|<=|delivery|warranty|days|weeks|months|years)\b/gi, '')
-    .replace(/\b\d+\s*(?:units|pieces|pcs|items|chairs|desks|tables)\b/gi, '')
+    .replace(/\b\d+\s*(?:units|pieces|pcs|items)\b/gi, '')
     .replace(/\$\d+(?:,\d{3})*(?:\.\d+)?/g, '')
     .replace(/\b\d+\s*(?:days|weeks|months|years)\b/gi, '')
     .replace(/\b(?:within|in)\s*\d+\s*(?:days|weeks)\b/gi, '')
+    .replace(/\b(?:for|with|that|which)\b/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
 
-  return cleaned.length > 2 ? cleaned : null;
+  return cleaned.length > 2 && cleaned.length < 50 ? cleaned : null;
 }
 
 export function validateSlots(slots: ParsedSlots): { isValid: boolean; missingFields: string[] } {
