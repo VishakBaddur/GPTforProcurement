@@ -366,67 +366,71 @@ export default function HomePage() {
       </div>
 
       {/* Results Modal */}
-      <ResultsModal
-        isOpen={showResults}
-        onClose={() => setShowResults(false)}
-        winner={auctionStatus?.leader ? {
-          id: auctionStatus.leader.id,
-          name: auctionStatus.leader.name,
-          finalBid: auctionStatus.leader.bid,
-          isCompliant: auctionStatus.leader.isCompliant,
-          warrantyMonths: 12,
-          maxDeliveryDays: 30
-        } : {
-          id: '',
-          name: '',
-          finalBid: 0,
-          isCompliant: false,
-          warrantyMonths: 0,
-          maxDeliveryDays: 0
-        }}
-        rationale="Winner selected based on competitive pricing and compliance with all requirements."
-        auctionSummary={{
-          totalRounds: auctionStatus?.round || 0,
-          totalBids: auctionStatus?.totalBids || 0,
-          duration: 0
-        }}
-        poDetails={{
-          poNumber: 'PO-123456',
-          buyerName: 'Demo Company',
-          buyerEmail: 'procurement@democompany.com',
-          vendorName: auctionStatus?.leader?.name || 'Vendor',
-          vendorEmail: 'vendor@example.com',
-          item: parsedSlots?.item || 'Item',
-          quantity: parsedSlots?.quantity || 0,
-          unitPrice: auctionStatus?.leader?.bid || 0,
-          totalPrice: (auctionStatus?.leader?.bid || 0) * (parsedSlots?.quantity || 0),
-          deliveryDays: 30,
-          warrantyMonths: 12,
-          orderDate: new Date().toLocaleDateString(),
-          deliveryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
-        }}
-        onGeneratePO={handleGeneratePO}
-      />
+      {showResults && (
+        <ResultsModal
+          isOpen={showResults}
+          onClose={() => setShowResults(false)}
+          winner={auctionStatus?.leader ? {
+            id: auctionStatus.leader.id,
+            name: auctionStatus.leader.name,
+            finalBid: auctionStatus.leader.bid,
+            isCompliant: auctionStatus.leader.isCompliant,
+            warrantyMonths: 12,
+            maxDeliveryDays: 30
+          } : {
+            id: '',
+            name: '',
+            finalBid: 0,
+            isCompliant: false,
+            warrantyMonths: 0,
+            maxDeliveryDays: 0
+          }}
+          rationale="Winner selected based on competitive pricing and compliance with all requirements."
+          auctionSummary={{
+            totalRounds: auctionStatus?.round || 0,
+            totalBids: auctionStatus?.totalBids || 0,
+            duration: 0
+          }}
+          poDetails={{
+            poNumber: 'PO-123456',
+            buyerName: 'Demo Company',
+            buyerEmail: 'procurement@democompany.com',
+            vendorName: auctionStatus?.leader?.name || 'Vendor',
+            vendorEmail: 'vendor@example.com',
+            item: parsedSlots?.item || 'Item',
+            quantity: parsedSlots?.quantity || 0,
+            unitPrice: auctionStatus?.leader?.bid || 0,
+            totalPrice: (auctionStatus?.leader?.bid || 0) * (parsedSlots?.quantity || 0),
+            deliveryDays: 30,
+            warrantyMonths: 12,
+            orderDate: new Date().toLocaleDateString(),
+            deliveryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
+          }}
+          onGeneratePO={handleGeneratePO}
+        />
+      )}
 
       {/* PO Preview */}
-      <POPreview
-        poDetails={{
-          poNumber: 'PO-123456',
-          buyerName: 'Demo Company',
-          buyerEmail: 'procurement@democompany.com',
-          vendorName: auctionStatus?.leader?.name || 'Vendor',
-          vendorEmail: 'vendor@example.com',
-          item: parsedSlots?.item || 'Item',
-          quantity: parsedSlots?.quantity || 0,
-          unitPrice: auctionStatus?.leader?.bid || 0,
-          totalPrice: (auctionStatus?.leader?.bid || 0) * (parsedSlots?.quantity || 0),
-          deliveryDays: 30,
-          warrantyMonths: 12,
-          orderDate: new Date().toLocaleDateString(),
-          deliveryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
-        }}
-        onClose={() => setShowPOPreview(false)}
-      />
+      {showPOPreview && (
+        <POPreview
+          poDetails={{
+            poNumber: 'PO-123456',
+            buyerName: 'Demo Company',
+            buyerEmail: 'procurement@democompany.com',
+            vendorName: auctionStatus?.leader?.name || 'Vendor',
+            vendorEmail: 'vendor@example.com',
+            item: parsedSlots?.item || 'Item',
+            quantity: parsedSlots?.quantity || 0,
+            unitPrice: auctionStatus?.leader?.bid || 0,
+            totalPrice: (auctionStatus?.leader?.bid || 0) * (parsedSlots?.quantity || 0),
+            deliveryDays: 30,
+            warrantyMonths: 12,
+            orderDate: new Date().toLocaleDateString(),
+            deliveryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
+          }}
+          onClose={() => setShowPOPreview(false)}
+        />
+      )}
 
       {/* Pitch Mode Button */}
       <PitchModeButton
