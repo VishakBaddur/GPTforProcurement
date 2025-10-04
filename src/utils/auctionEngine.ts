@@ -139,11 +139,12 @@ export class AuctionEngine {
       message: `Round ${auction.rounds} started`
     });
     
-    const currentLowest = Math.min(...auction.vendors.map(v => v.currentBid));
+    const currentLowest = auction.vendors && auction.vendors.length > 0 ? 
+      Math.min(...auction.vendors.map(v => v.currentBid)) : 0;
     let leaderChanged = false;
     let previousLeader = this.getCurrentLeader(auction);
     
-    auction.vendors.forEach(vendor => {
+    auction.vendors?.forEach(vendor => {
       if (Math.random() < 0.8) { // 80% chance to bid
         const targetPrice = currentLowest * (1 - Math.random() * 0.02 * vendor.aggressiveness);
         const newBid = Math.max(targetPrice, vendor.minAcceptable);
@@ -192,7 +193,7 @@ export class AuctionEngine {
   }
   
   private getCurrentLeader(auction: Auction): string | null {
-    if (auction.vendors.length === 0) return null;
+    if (!auction.vendors || auction.vendors.length === 0) return null;
     
     return auction.vendors.reduce((lowest, vendor) => 
       vendor.currentBid < lowest.currentBid ? vendor : lowest
@@ -206,7 +207,7 @@ export class AuctionEngine {
     auction.status = 'ended';
     
     // Select winner based on compliance and price
-    const compliantBids = auction.vendors.filter(v => v.isCompliant);
+    const compliantBids = auction.vendors?.filter(v => v.isCompliant) || [];
     let winner: Vendor;
     
     if (compliantBids.length > 0) {
@@ -215,12 +216,14 @@ export class AuctionEngine {
       );
     } else {
       // Fall back to compliance-weighted selection
-      winner = auction.vendors.reduce((best, vendor) => {
+      winner = auction.vendors?.reduce((best, vendor) => {
         const bestScore = best.complianceScore * 1000 - best.currentBid;
         const vendorScore = vendor.complianceScore * 1000 - vendor.currentBid;
         return vendorScore > bestScore ? vendor : best;
-      });
+      }) || auction.vendors?.[0];
     }
+    
+    if (!winner) return;
     
     auction.events.push({
       type: 'auction_finalized',
