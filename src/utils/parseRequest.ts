@@ -61,7 +61,7 @@ export function parseRequest(text: string): ParsedSlots {
     item, 
     quantity: qty, 
     budget, 
-    maxBudget, 
+    maxBudget: budget, // Use budget as maxBudget for now
     deliveryDays, 
     warranty: warrantyMatch ? warrantyMatch[0] : null,
     warrantyMonths: warrantyMonths || undefined
