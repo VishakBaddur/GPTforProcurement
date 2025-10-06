@@ -64,3 +64,4 @@ export default function CountdownTimer({ endTime, onTimeUp }: CountdownTimerProp
     </motion.div>
   );
 }
+

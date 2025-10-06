@@ -8,13 +8,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'procurvv-bg': '#0d1117',
-        'procurvv-card': '#0f1720',
-        'procurvv-accent': '#00bfff',
-        'procurvv-text': '#e6eef3',
-        'procurvv-muted': '#98a0a6',
-        'procurvv-border': '#2a3b4a',
-        'procurvv-logo': '#202c3a',
+        // Primary brand colors - elegant grey/green gradients
+        'procurvv-bg': '#fafbfc',
+        'procurvv-card': '#ffffff',
+        'procurvv-accent': '#10b981', // Emerald green
+        'procurvv-accent-light': '#34d399',
+        'procurvv-accent-dark': '#059669',
+        'procurvv-text': '#1f2937',
+        'procurvv-text-light': '#6b7280',
+        'procurvv-muted': '#9ca3af',
+        'procurvv-border': '#e5e7eb',
+        'procurvv-logo': '#10b981',
+        
+        // Gradient colors for sophisticated look
+        'procurvv-gradient-start': '#f0fdf4',
+        'procurvv-gradient-end': '#ecfdf5',
+        'procurvv-gradient-accent': '#10b981',
+        'procurvv-gradient-accent-light': '#34d399',
+        
+        // Dark theme colors (for auction interface)
+        'procurvv-dark-bg': '#0d1117',
+        'procurvv-dark-card': '#0f1720',
+        'procurvv-dark-text': '#e6eef3',
+        'procurvv-dark-muted': '#98a0a6',
+        'procurvv-dark-border': '#2a3b4a',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

@@ -256,25 +256,23 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-procurvv-bg text-procurvv-text">
+    <div className="min-h-screen bg-procurvv-dark-bg text-procurvv-dark-text">
       {/* Header */}
-      <div className="bg-procurvv-bg border-b border-procurvv-border p-6">
+      <div className="bg-procurvv-dark-bg border-b border-procurvv-dark-border p-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-procurvv-logo rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-procurvv-accent rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">P</span>
             </div>
-            <h1 className="text-2xl font-bold text-procurvv-text">
+            <h1 className="text-2xl font-bold text-procurvv-dark-text">
               Procurvv
             </h1>
           </div>
           <div className="flex items-center space-x-6">
-            <a href="#" className="text-procurvv-muted hover:text-procurvv-text transition-colors">Features</a>
-            <a href="#" className="text-procurvv-muted hover:text-procurvv-text transition-colors">FAQ</a>
-            <a href="#" className="text-procurvv-muted hover:text-procurvv-text transition-colors">About</a>
-            <button className="px-4 py-2 border border-procurvv-muted text-procurvv-text rounded-lg hover:bg-procurvv-card transition-colors">
-              Join Waitlist
-            </button>
+            <a href="/" className="text-procurvv-dark-muted hover:text-procurvv-dark-text transition-colors">← Back to Home</a>
+            <a href="/features" className="text-procurvv-dark-muted hover:text-procurvv-dark-text transition-colors">Features</a>
+            <a href="/how-it-works" className="text-procurvv-dark-muted hover:text-procurvv-dark-text transition-colors">How it works</a>
+            <a href="/customers" className="text-procurvv-dark-muted hover:text-procurvv-dark-text transition-colors">Customers</a>
           </div>
         </div>
       </div>
