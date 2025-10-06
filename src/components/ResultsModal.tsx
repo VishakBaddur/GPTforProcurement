@@ -73,7 +73,10 @@ export default function ResultsModal({
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-[#e6eef3]">Auction Results</h2>
             <button
-              onClick={onClose}
+              onClick={() => {
+                console.log('Close button clicked');
+                onClose();
+              }}
               className="text-[#98a0a6] hover:text-[#e6eef3] transition-colors"
             >
               ✕
@@ -166,7 +169,10 @@ export default function ResultsModal({
               Generate PO
             </motion.button>
             <motion.button
-              onClick={onClose}
+              onClick={() => {
+                console.log('Close button (bottom) clicked');
+                onClose();
+              }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="px-6 py-3 border border-[#98a0a6] text-[#e6eef3] rounded-xl hover:bg-[#0f1720] transition-colors"

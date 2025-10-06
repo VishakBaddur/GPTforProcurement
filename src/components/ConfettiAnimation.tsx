@@ -14,9 +14,11 @@ export default function ConfettiAnimation({ isActive }: ConfettiAnimationProps) 
       const createConfetti = () => {
         const colors = ['#00bfff', '#ff6f61', '#10b981', '#f59e0b', '#8b5cf6'];
         const confettiCount = 50;
+        const confettiElements: HTMLElement[] = [];
         
         for (let i = 0; i < confettiCount; i++) {
           const confetti = document.createElement('div');
+          confetti.className = 'confetti-particle';
           confetti.style.position = 'fixed';
           confetti.style.left = Math.random() * 100 + 'vw';
           confetti.style.top = '-10px';
@@ -28,6 +30,7 @@ export default function ConfettiAnimation({ isActive }: ConfettiAnimationProps) 
           confetti.style.zIndex = '9999';
           
           document.body.appendChild(confetti);
+          confettiElements.push(confetti);
           
           // Animate confetti falling
           confetti.animate([
@@ -40,11 +43,35 @@ export default function ConfettiAnimation({ isActive }: ConfettiAnimationProps) 
             confetti.remove();
           };
         }
+        
+        // Cleanup function
+        return () => {
+          confettiElements.forEach(confetti => {
+            if (confetti.parentNode) {
+              confetti.remove();
+            }
+          });
+        };
       };
       
-      createConfetti();
+      const cleanup = createConfetti();
+      
+      // Cleanup when component unmounts or isActive becomes false
+      return cleanup;
+    } else {
+      // Clean up any existing confetti when isActive becomes false
+      const existingConfetti = document.querySelectorAll('.confetti-particle');
+      existingConfetti.forEach(confetti => confetti.remove());
     }
   }, [isActive]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      const existingConfetti = document.querySelectorAll('.confetti-particle');
+      existingConfetti.forEach(confetti => confetti.remove());
+    };
+  }, []);
 
   if (!isActive) return null;
 
