@@ -216,11 +216,15 @@ export class AuctionEngine {
       );
     } else {
       // Fall back to compliance-weighted selection
-      winner = auction.vendors?.reduce((best, vendor) => {
-        const bestScore = best.complianceScore * 1000 - best.currentBid;
-        const vendorScore = vendor.complianceScore * 1000 - vendor.currentBid;
-        return vendorScore > bestScore ? vendor : best;
-      }) || auction.vendors?.[0];
+      if (auction.vendors && auction.vendors.length > 0) {
+        winner = auction.vendors.reduce((best, vendor) => {
+          const bestScore = best.complianceScore * 1000 - best.currentBid;
+          const vendorScore = vendor.complianceScore * 1000 - vendor.currentBid;
+          return vendorScore > bestScore ? vendor : best;
+        });
+      } else {
+        return; // No vendors available
+      }
     }
     
     if (!winner) return;
@@ -261,6 +265,8 @@ export class AuctionEngine {
   getAuctionResults(auctionId: string) {
     const auction = this.auctions.get(auctionId);
     if (!auction || auction.status !== 'ended') return null;
+    
+    if (!auction.vendors || auction.vendors.length === 0) return null;
     
     const winner = auction.vendors.reduce((lowest, vendor) => 
       vendor.currentBid < lowest.currentBid ? vendor : lowest
