@@ -10,28 +10,28 @@ export default function HowItWorksPage() {
       title: "Describe your need",
       description: "Tell us what you need in plain English — no forms, no complicated interfaces. Source suppliers, analyze spend, run auctions, check compliance",
       icon: "💬",
-      color: "from-blue-500 to-blue-600"
+      color: "from-procurvv-accent-blue to-procurvv-accent-blue-light"
     },
     {
       number: "02", 
       title: "AI agents take action",
       description: "Our AI handles the complex workflows automatically while you watch in real-time. Supplier discovery, bid analysis, contract review, compliance checks",
       icon: "🧠",
-      color: "from-purple-500 to-purple-600"
+      color: "from-procurvv-accent to-procurvv-accent-light"
     },
     {
       number: "03",
       title: "Real-time intelligence", 
       description: "Gather market data and supplier information instantly from global sources. Pricing data, supplier ratings, compliance status, availability",
       icon: "📊",
-      color: "from-pink-500 to-pink-600"
+      color: "from-procurvv-accent-blue-light to-procurvv-accent"
     },
     {
       number: "04",
       title: "Get actionable results",
       description: "Receive comprehensive analysis with full audit trails and documentation. Sourced recommendations, cost savings, risk assessments",
       icon: "📄",
-      color: "from-green-500 to-green-600"
+      color: "from-procurvv-accent to-procurvv-accent-blue"
     }
   ];
 
@@ -81,7 +81,7 @@ export default function HowItWorksPage() {
               <a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">
                 Sign in
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent transition-all duration-200 font-medium">
+              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
                 Get started
               </button>
             </div>
@@ -110,7 +110,7 @@ export default function HowItWorksPage() {
               className="text-4xl md:text-6xl font-bold text-procurvv-text mb-6"
             >
               From prompt to{' '}
-              <span className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
                 procurement
               </span>
             </motion.h1>
@@ -204,7 +204,7 @@ export default function HowItWorksPage() {
                 <span>•</span>
                 <span>See it in action — watch AI agents work in real-time</span>
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent transition-all duration-200 font-medium flex items-center space-x-2">
+              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium flex items-center space-x-2">
                 <span>Try Procurvv Free</span>
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />

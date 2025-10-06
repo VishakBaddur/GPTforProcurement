@@ -8,23 +8,27 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary brand colors - elegant grey/green gradients
+        // Primary brand colors - light theme with purple/blue accents (matching initial images)
         'procurvv-bg': '#fafbfc',
         'procurvv-card': '#ffffff',
-        'procurvv-accent': '#10b981', // Emerald green
-        'procurvv-accent-light': '#34d399',
-        'procurvv-accent-dark': '#059669',
+        'procurvv-accent': '#8b5cf6', // Purple
+        'procurvv-accent-light': '#a78bfa',
+        'procurvv-accent-dark': '#7c3aed',
+        'procurvv-accent-blue': '#3b82f6', // Blue
+        'procurvv-accent-blue-light': '#60a5fa',
         'procurvv-text': '#1f2937',
         'procurvv-text-light': '#6b7280',
         'procurvv-muted': '#9ca3af',
         'procurvv-border': '#e5e7eb',
-        'procurvv-logo': '#10b981',
+        'procurvv-logo': '#8b5cf6',
         
-        // Gradient colors for sophisticated look
-        'procurvv-gradient-start': '#f0fdf4',
-        'procurvv-gradient-end': '#ecfdf5',
-        'procurvv-gradient-accent': '#10b981',
-        'procurvv-gradient-accent-light': '#34d399',
+        // Gradient colors for sophisticated look (purple to blue)
+        'procurvv-gradient-start': '#f8fafc',
+        'procurvv-gradient-end': '#f1f5f9',
+        'procurvv-gradient-accent': '#8b5cf6',
+        'procurvv-gradient-accent-light': '#a78bfa',
+        'procurvv-gradient-blue': '#3b82f6',
+        'procurvv-gradient-blue-light': '#60a5fa',
         
         // Dark theme colors (for auction interface)
         'procurvv-dark-bg': '#0d1117',

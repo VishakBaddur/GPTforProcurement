@@ -66,7 +66,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
               <a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">
                 Sign in
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent transition-all duration-200 font-medium">
+              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
                 Get started
               </button>
             </div>
@@ -99,7 +99,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             className="text-5xl md:text-7xl font-bold text-procurvv-text mb-6"
           >
             The AI Copilot for{' '}
-            <span className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
               Procurement
             </span>
           </motion.h1>
@@ -159,7 +159,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             {/* Send Button */}
             <button
               onClick={handleSubmit}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light text-white p-3 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent transition-all duration-200"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white p-3 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />

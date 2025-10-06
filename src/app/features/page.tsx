@@ -85,7 +85,7 @@ export default function FeaturesPage() {
               <a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">
                 Sign in
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent transition-all duration-200 font-medium">
+              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
                 Get started
               </button>
             </div>
@@ -114,7 +114,7 @@ export default function FeaturesPage() {
               className="text-4xl md:text-6xl font-bold text-procurvv-text mb-6"
             >
               Complete{' '}
-              <span className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
                 source-to-pay
               </span>
             </motion.h1>
@@ -180,7 +180,7 @@ export default function FeaturesPage() {
                 Join 150+ companies using AI to streamline their source-to-pay processes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-light text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent transition-all duration-200 font-medium">
+                <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
                   Get started free
                 </button>
                 <button className="bg-white border border-procurvv-border text-procurvv-text px-8 py-3 rounded-lg hover:bg-procurvv-gradient-start transition-all duration-200 font-medium">
