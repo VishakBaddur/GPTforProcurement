@@ -93,7 +93,7 @@ export default function CustomersPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-xl text-procurvv-text-light max-w-2xl mx-auto"
+              className="text-xl text-procurvv-text max-w-2xl mx-auto"
             >
               See how teams are transforming their procurement operations.
             </motion.p>
@@ -111,7 +111,7 @@ export default function CustomersPage() {
                 <div className="text-3xl md:text-4xl font-bold text-procurvv-text mb-2">
                   {stat.number}
                 </div>
-                <div className="text-procurvv-text-light text-sm">
+                <div className="text-procurvv-text text-sm">
                   {stat.label}
                 </div>
               </div>
@@ -174,7 +174,7 @@ export default function CustomersPage() {
                     <div className="font-semibold text-procurvv-text">
                       {testimonial.author}
                     </div>
-                    <div className="text-sm text-procurvv-text-light">
+                    <div className="text-sm text-procurvv-text">
                       {testimonial.title}, {testimonial.company}
                     </div>
                   </div>
@@ -201,7 +201,7 @@ export default function CustomersPage() {
               <h2 className="text-2xl font-bold text-procurvv-text mb-4">
                 Ready to transform your procurement?
               </h2>
-              <p className="text-procurvv-text-light mb-6">
+              <p className="text-procurvv-text mb-6">
                 Join 150+ companies using AI to streamline their source-to-pay processes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -231,7 +231,7 @@ export default function CustomersPage() {
                   </div>
                   <span className="text-procurvv-text font-semibold text-xl">Procurvv</span>
                 </div>
-                <p className="text-procurvv-text-light text-sm mb-4">
+                <p className="text-procurvv-text text-sm mb-4">
                   The AI copilot that transforms procurement from source-to-pay with intelligent automation.
                 </p>
                 <div className="flex space-x-4">
@@ -257,40 +257,40 @@ export default function CustomersPage() {
               <div>
                 <h3 className="font-semibold text-procurvv-text mb-4">Product</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="/features" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Features</a></li>
-                  <li><a href="/how-it-works" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">How it works</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Pricing</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">API</a></li>
+                  <li><a href="/features" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Features</a></li>
+                  <li><a href="/how-it-works" className="text-procurvv-text hover:text-procurvv-accent transition-colors">How it works</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Pricing</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">API</a></li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold text-procurvv-text mb-4">Company</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">About</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Blog</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Careers</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Contact</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">About</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Blog</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Careers</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Contact</a></li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold text-procurvv-text mb-4">Resources</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Documentation</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Help center</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Community</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Status</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Documentation</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Help center</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Community</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Status</a></li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold text-procurvv-text mb-4">Legal</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Privacy</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Terms</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Security</a></li>
-                  <li><a href="#" className="text-procurvv-text-light hover:text-procurvv-accent transition-colors">Cookies</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Privacy</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Terms</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Security</a></li>
+                  <li><a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Cookies</a></li>
                 </ul>
               </div>
             </div>

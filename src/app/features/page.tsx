@@ -102,7 +102,7 @@ export default function FeaturesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block text-sm text-procurvv-text-light mb-4"
+              className="inline-block text-sm text-procurvv-text mb-4"
             >
               Features
             </motion.div>
@@ -123,7 +123,7 @@ export default function FeaturesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="text-xl text-procurvv-text-light max-w-2xl mx-auto"
+              className="text-xl text-procurvv-text max-w-2xl mx-auto"
             >
               One AI copilot handles your entire procurement workflow. No more jumping between tools.
             </motion.p>
@@ -158,7 +158,7 @@ export default function FeaturesPage() {
                 <h3 className="text-xl font-bold text-procurvv-text mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-procurvv-text-light leading-relaxed">
+                <p className="text-procurvv-text leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -176,7 +176,7 @@ export default function FeaturesPage() {
               <h2 className="text-2xl font-bold text-procurvv-text mb-4">
                 Ready to transform your procurement?
               </h2>
-              <p className="text-procurvv-text-light mb-6">
+              <p className="text-procurvv-text mb-6">
                 Join 150+ companies using AI to streamline their source-to-pay processes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

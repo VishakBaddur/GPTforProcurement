@@ -175,7 +175,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
           transition={{ delay: 1.0 }}
           className="w-full max-w-4xl mx-auto"
         >
-          <p className="text-procurvv-text-light text-sm mb-4">Try these examples:</p>
+          <p className="text-procurvv-text text-sm mb-4">Try these examples:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl mx-auto">
             {exampleQueries.map((query, index) => (
               <button
@@ -199,8 +199,8 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
           transition={{ delay: 1.2 }}
           className="mt-16 text-center"
         >
-          <p className="text-procurvv-text-light text-sm mb-6">Trusted by procurement teams at 150+ companies</p>
-          <div className="flex justify-center items-center space-x-8 text-xs text-procurvv-text-light">
+          <p className="text-procurvv-text text-sm mb-6">Trusted by procurement teams at 150+ companies</p>
+          <div className="flex justify-center items-center space-x-8 text-xs text-procurvv-text">
             <div className="flex items-center space-x-2">
               <svg className="w-4 h-4 text-procurvv-accent" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

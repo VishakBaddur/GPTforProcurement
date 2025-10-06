@@ -98,7 +98,7 @@ export default function HowItWorksPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block text-sm text-procurvv-text-light mb-4"
+              className="inline-block text-sm text-procurvv-text mb-4"
             >
               How it works
             </motion.div>
@@ -119,7 +119,7 @@ export default function HowItWorksPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="text-xl text-procurvv-text-light max-w-2xl mx-auto"
+              className="text-xl text-procurvv-text max-w-2xl mx-auto"
             >
               Our AI agents handle the entire workflow, so you can focus on strategic decisions.
             </motion.p>
@@ -158,7 +158,7 @@ export default function HowItWorksPage() {
                     <h3 className="text-xl font-bold text-procurvv-text mb-4">
                       {step.title}
                     </h3>
-                    <p className="text-procurvv-text-light leading-relaxed">
+                    <p className="text-procurvv-text leading-relaxed">
                       {step.description}
                     </p>
                   </div>
@@ -184,7 +184,7 @@ export default function HowItWorksPage() {
                   <h3 className="text-xl font-bold text-procurvv-text mb-3">
                     {benefit.title}
                   </h3>
-                  <p className="text-procurvv-text-light">
+                  <p className="text-procurvv-text">
                     {benefit.description}
                   </p>
                 </motion.div>
