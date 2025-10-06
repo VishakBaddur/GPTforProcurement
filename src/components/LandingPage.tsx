@@ -140,7 +140,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
               <button
                 onClick={handleAttachmentClick}
-                className="text-procurvv-muted hover:text-procurvv-accent transition-colors p-1"
+                className="text-procurvv-text hover:text-procurvv-accent transition-colors p-1"
                 title="Upload vendor list or requirements file"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

@@ -16,9 +16,9 @@ module.exports = {
         'procurvv-accent-dark': '#7c3aed',
         'procurvv-accent-blue': '#3b82f6', // Blue
         'procurvv-accent-blue-light': '#60a5fa',
-        'procurvv-text': '#1f2937',
-        'procurvv-text-light': '#6b7280',
-        'procurvv-muted': '#9ca3af',
+        'procurvv-text': '#000000',
+        'procurvv-text-light': '#374151',
+        'procurvv-muted': '#6b7280',
         'procurvv-border': '#e5e7eb',
         'procurvv-logo': '#8b5cf6',
         
