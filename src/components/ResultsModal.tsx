@@ -54,8 +54,8 @@ export default function ResultsModal({
   onGeneratePO 
 }: ResultsModalProps) {
   return (
-    <AnimatePresence>
-      {isOpen && (
+    <AnimatePresence mode="wait">
+      {isOpen ? (
         <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -182,7 +182,7 @@ export default function ResultsModal({
           </div>
         </motion.div>
       </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 }

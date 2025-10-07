@@ -29,18 +29,26 @@ export function generateCommentary(
   const template = templates[Math.floor(Math.random() * templates.length)];
   
   // Replace placeholders
+  // Compute sensible deltas when we have two prices
+  const computedDelta = (secondPrice && leaderPrice)
+    ? Math.max(0, secondPrice - leaderPrice)
+    : undefined;
+  const computedDiffPct = (secondPrice && leaderPrice)
+    ? (((secondPrice - leaderPrice) / leaderPrice) * 100)
+    : undefined;
+
   return template
     .replace('{r}', round.toString())
     .replace('{leader}', leader)
     .replace('{price}', leaderPrice.toFixed(2))
     .replace('{second}', secondPlace || 'the next vendor')
-    .replace('{diff}', secondPrice ? ((secondPrice - leaderPrice) / leaderPrice * 100).toFixed(1) : '0')
+    .replace('{diff}', computedDiffPct !== undefined ? computedDiffPct.toFixed(1) : '')
     .replace('{vendor}', vendor || 'A vendor')
-    .replace('{delta}', delta ? delta.toFixed(2) : '0')
+    .replace('{delta}', (delta ?? computedDelta ?? 0).toFixed(2))
     .replace('{gap}', gap ? gap.toFixed(1) : '0')
     .replace('{warranty}', warranty?.toString() || '0')
     .replace('{reqWarranty}', reqWarranty?.toString() || '0')
-    .replace('{count}', count?.toString() || '0');
+    .replace('{count}', count?.toString() || '');
 }
 
 export function generateRoundStartCommentary(round: number, activeVendors: number): string {
