@@ -150,7 +150,7 @@ export default function HowItWorksPage() {
                     </div>
                     
                     {/* Icon */}
-                    <div className="w-16 h-16 bg-gradient-to-br from-procurvv-accent/10 to-procurvv-accent-light/10 rounded-xl flex items-center justify-center text-3xl mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-3xl mb-6">
                       {step.icon}
                     </div>
                     
@@ -178,7 +178,7 @@ export default function HowItWorksPage() {
                   transition={{ delay: 1.2 + index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-procurvv-accent/10 to-procurvv-accent-light/10 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
                     {benefit.icon}
                   </div>
                   <h3 className="text-xl font-bold text-black mb-3">
@@ -200,11 +200,11 @@ export default function HowItWorksPage() {
             className="text-center"
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a href="#" className="text-purple-600 hover:text-purple-700 transition-colors flex items-center space-x-2">
+              <a href="#" className="text-gray-700 hover:text-gray-800 transition-colors flex items-center space-x-2">
                 <span>•</span>
                 <span>See it in action — watch AI agents work in real-time</span>
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium flex items-center space-x-2">
+              <button className="bg-gradient-to-r from-gray-700 to-gray-500 text-white px-8 py-3 rounded-lg hover:from-gray-800 hover:to-gray-600 transition-all duration-200 font-medium flex items-center space-x-2">
                 <span>Try Procurvv Free</span>
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />

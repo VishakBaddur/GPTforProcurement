@@ -85,7 +85,7 @@ export default function FeaturesPage() {
               <a href="#" className="text-black hover:text-gray-700 transition-colors">
                 Sign in
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
+              <button className="bg-gradient-to-r from-gray-700 to-gray-500 text-white px-6 py-2 rounded-lg hover:from-gray-800 hover:to-gray-600 transition-all duration-200 font-medium">
                 Get started
               </button>
             </div>
@@ -142,7 +142,7 @@ export default function FeaturesPage() {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-procurvv-accent/10 to-procurvv-accent-light/10 rounded-xl flex items-center justify-center text-2xl">
+                       <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-2xl">
                       {feature.icon}
                     </div>
                     <div className={`px-3 py-1 rounded-full text-xs font-medium text-white ${feature.statusColor}`}>
@@ -180,7 +180,7 @@ export default function FeaturesPage() {
                 Join 150+ companies using AI to streamline their source-to-pay processes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
+              <button className="bg-gradient-to-r from-gray-700 to-gray-500 text-white px-8 py-3 rounded-lg hover:from-gray-800 hover:to-gray-600 transition-all duration-200 font-medium">
                   Get started free
                 </button>
                 <button className="bg-white border border-gray-300 text-black px-8 py-3 rounded-lg hover:bg-gray-50 transition-all duration-200 font-medium">
