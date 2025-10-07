@@ -100,7 +100,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
           >
             The AI Copilot for{' '}
             <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
-              Procurement - UPDATED!
+              Procurement - TESTING DEPLOYMENT!
             </span>
           </motion.h1>
 
