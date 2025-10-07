@@ -54,17 +54,17 @@ export default function CustomersPage() {
             
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="/features" className="text-black hover:text-purple-600 transition-colors">Features</a>
-              <a href="/how-it-works" className="text-black hover:text-purple-600 transition-colors">How it works</a>
-              <a href="/customers" className="text-procurvv-accent font-medium">Customers</a>
+              <a href="/features" className="text-black hover:text-gray-700 transition-colors">Features</a>
+              <a href="/how-it-works" className="text-black hover:text-gray-700 transition-colors">How it works</a>
+              <a href="/customers" className="text-gray-700 font-medium">Customers</a>
             </nav>
             
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-black hover:text-purple-600 transition-colors">
+              <a href="#" className="text-black hover:text-gray-700 transition-colors">
                 Sign in
               </a>
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
+              <button className="bg-gradient-to-r from-gray-700 to-gray-500 text-white px-6 py-2 rounded-lg hover:from-gray-800 hover:to-gray-600 transition-all duration-200 font-medium">
                 Get started
               </button>
             </div>
@@ -84,7 +84,7 @@ export default function CustomersPage() {
               className="text-4xl md:text-6xl font-bold text-black mb-6"
             >
               Trusted by procurement{' '}
-              <span className="text-purple-600">
+              <span className="text-gray-700">
                 leaders
               </span>
             </motion.h1>

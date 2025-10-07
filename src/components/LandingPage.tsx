@@ -44,18 +44,18 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="/features" className="text-black hover:text-purple-600 transition-colors">Features</a>
-              <a href="/how-it-works" className="text-black hover:text-purple-600 transition-colors">
+              <a href="/features" className="text-black hover:text-gray-700 transition-colors">Features</a>
+              <a href="/how-it-works" className="text-black hover:text-gray-700 transition-colors">
                 How it works
               </a>
-              <a href="/customers" className="text-black hover:text-purple-600 transition-colors">
+              <a href="/customers" className="text-black hover:text-gray-700 transition-colors">
                 Customers
               </a>
             </nav>
             
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-black hover:text-purple-600 transition-colors">
+              <a href="#" className="text-black hover:text-gray-700 transition-colors">
                 Sign in
               </a>
               <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
@@ -136,7 +136,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
                 <div className="absolute right-16 top-1/2 transform -translate-y-1/2">
                   <button
                     onClick={handleAttachmentClick}
-                    className="text-black hover:text-purple-600 transition-colors p-1"
+                    className="text-black hover:text-gray-700 transition-colors p-1"
                     title="Upload vendor list or requirements file"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -170,10 +170,10 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
               Join 150+ companies already simplifying their source-to-pay with Procurvv.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="inline-flex items-center justify-center bg-procurvv-accent text-white px-8 py-4 rounded-xl shadow-md hover:shadow-lg hover:bg-procurvv-accent-dark transition-colors duration-200 font-semibold text-lg">
+              <button className="inline-flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-500 text-white px-8 py-4 rounded-xl shadow-md hover:from-gray-800 hover:to-gray-600 transition-colors duration-200 font-semibold text-lg">
                 Get started
               </button>
-              <button className="inline-flex items-center justify-center bg-white border-2 border-procurvv-accent text-black px-8 py-4 rounded-xl hover:bg-procurvv-accent hover:text-white transition-colors duration-200 font-semibold text-lg">
+              <button className="inline-flex items-center justify-center bg-white border-2 border-gray-400 text-black px-8 py-4 rounded-xl hover:bg-gray-700 hover:text-white transition-colors duration-200 font-semibold text-lg">
                 Book a demo
               </button>
             </div>
