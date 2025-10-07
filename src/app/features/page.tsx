@@ -56,9 +56,9 @@ export default function FeaturesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-procurvv-bg">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-procurvv-border">
+      <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -137,7 +137,7 @@ export default function FeaturesPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-procurvv-border hover:shadow-md transition-all duration-200 group"
+                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 group"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
@@ -155,10 +155,10 @@ export default function FeaturesPage() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold text-procurvv-text mb-3">
+                <h3 className="text-xl font-bold text-black mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-procurvv-text leading-relaxed">
+                <p className="text-gray-600 leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -172,18 +172,18 @@ export default function FeaturesPage() {
             transition={{ delay: 1.4 }}
             className="text-center mt-16"
           >
-            <div className="bg-gradient-to-r from-procurvv-gradient-start to-procurvv-gradient-end rounded-2xl p-8 border border-procurvv-accent/20">
-              <h2 className="text-2xl font-bold text-procurvv-text mb-4">
+            <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+              <h2 className="text-2xl font-bold text-black mb-4">
                 Ready to transform your procurement?
               </h2>
-              <p className="text-procurvv-text mb-6">
+              <p className="text-black mb-6">
                 Join 150+ companies using AI to streamline their source-to-pay processes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-3 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
                   Get started free
                 </button>
-                <button className="bg-white border border-procurvv-border text-procurvv-text px-8 py-3 rounded-lg hover:bg-procurvv-gradient-start transition-all duration-200 font-medium">
+                <button className="bg-white border border-gray-300 text-black px-8 py-3 rounded-lg hover:bg-gray-50 transition-all duration-200 font-medium">
                   Schedule demo
                 </button>
               </div>
