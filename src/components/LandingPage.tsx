@@ -79,9 +79,9 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-procurvv-bg">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-procurvv-border">
+      <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -214,7 +214,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index }}
-                  className="bg-white rounded-2xl p-8 border border-procurvv-border hover:shadow-lg transition-all duration-200"
+                  className="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-200"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-4xl">{feature.icon}</div>
@@ -234,7 +234,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="text-center bg-gradient-to-r from-procurvv-gradient-start to-procurvv-gradient-end rounded-3xl p-12 mb-16"
+            className="text-center bg-gray-50 rounded-3xl p-12 mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
               Ready to transform your procurement?
@@ -255,7 +255,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-procurvv-border py-16">
+      <footer className="bg-white border-t border-gray-200 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Logo */}
@@ -305,7 +305,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             </div>
           </div>
 
-          <div className="border-t border-procurvv-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 text-sm">
               © 2024 Procurvv. All rights reserved.
             </p>
