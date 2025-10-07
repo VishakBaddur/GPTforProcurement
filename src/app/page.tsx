@@ -71,6 +71,10 @@ export default function HomePage() {
   const commentaryRef = useRef<NodeJS.Timeout | null>(null);
   // Snapshot of previous state to generate event-driven commentary
   const prevSnapshotRef = useRef<{ bids: Record<string, number>; compliance: Record<string, boolean>; leaderId?: string } | null>(null);
+  // Control end-of-auction side-effects
+  const endModalTimeoutRef = useRef<number | NodeJS.Timeout | null>(null);
+  const confettiOffTimeoutRef = useRef<number | NodeJS.Timeout | null>(null);
+  const endTriggeredRef = useRef<boolean>(false);
 
   // Cleanup intervals on unmount
   useEffect(() => {
@@ -381,10 +385,12 @@ export default function HomePage() {
                 <CountdownTimer
                   endTime={new Date(auctionStatus.endsAt)}
                   onTimeUp={() => {
+                    if (endTriggeredRef.current) return; // avoid double-trigger
+                    endTriggeredRef.current = true;
                     setShowConfetti(true);
-                    setTimeout(() => setShowResults(true), 1000);
+                    endModalTimeoutRef.current = window.setTimeout(() => setShowResults(true), 1000);
                     // Turn off confetti after 3 seconds
-                    setTimeout(() => setShowConfetti(false), 3000);
+                    confettiOffTimeoutRef.current = window.setTimeout(() => setShowConfetti(false), 3000);
                   }}
                 />
               </div>
@@ -426,6 +432,16 @@ export default function HomePage() {
             setShowConfetti(false);
             // Ensure user can continue chatting after results
             setIsPitchMode(false);
+            // Clear any pending timers that could re-open the modal or re-trigger confetti
+            if (endModalTimeoutRef.current) {
+              clearTimeout(endModalTimeoutRef.current as number);
+              endModalTimeoutRef.current = null;
+            }
+            if (confettiOffTimeoutRef.current) {
+              clearTimeout(confettiOffTimeoutRef.current as number);
+              confettiOffTimeoutRef.current = null;
+            }
+            endTriggeredRef.current = true;
           }}
           winner={auctionStatus?.leader ? {
             id: auctionStatus.leader.id,

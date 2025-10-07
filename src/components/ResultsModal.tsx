@@ -54,7 +54,7 @@ export default function ResultsModal({
   onGeneratePO 
 }: ResultsModalProps) {
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence initial={false} mode="wait">
       {isOpen ? (
         <motion.div
         initial={{ opacity: 0 }}
@@ -170,7 +170,6 @@ export default function ResultsModal({
             </motion.button>
             <motion.button
               onClick={() => {
-                console.log('Close button (bottom) clicked');
                 onClose();
               }}
               whileHover={{ scale: 1.02 }}
