@@ -27,56 +27,6 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
     fileInputRef.current?.click();
   };
 
-  const features = [
-    {
-      id: 1,
-      title: "AI-Powered Sourcing",
-      description: "Intelligent supplier discovery and qualification with real-time market analysis.",
-      icon: "🔍",
-      status: "Live",
-      statusColor: "bg-green-500"
-    },
-    {
-      id: 2,
-      title: "Automated RFx",
-      description: "Generate and manage RFPs, RFQs, and RFIs with AI assistance.",
-      icon: "📋",
-      status: "Upcoming",
-      statusColor: "bg-orange-500"
-    },
-    {
-      id: 3,
-      title: "Contract Management",
-      description: "Smart contract creation, negotiation, and lifecycle management.",
-      icon: "📄",
-      status: "Upcoming",
-      statusColor: "bg-orange-500"
-    },
-    {
-      id: 4,
-      title: "Spend Analytics",
-      description: "Real-time insights and predictive analytics across all spend categories.",
-      icon: "📊",
-      status: "Upcoming",
-      statusColor: "bg-orange-500"
-    },
-    {
-      id: 5,
-      title: "Supplier Management",
-      description: "Comprehensive supplier onboarding, performance tracking, and risk assessment.",
-      icon: "🏢",
-      status: "Upcoming",
-      statusColor: "bg-orange-500"
-    },
-    {
-      id: 6,
-      title: "Invoice Processing",
-      description: "Automated invoice capture, validation, and approval workflows.",
-      icon: "🧾",
-      status: "Upcoming",
-      statusColor: "bg-orange-500"
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -172,8 +122,18 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
                   }}
                 />
                 
-                {/* Attachment Button */}
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                {/* Send Button */}
+                <button
+                  onClick={handleSubmit}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white p-3 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </button>
+                
+                {/* Attachment Button - Moved to right side */}
+                <div className="absolute right-16 top-1/2 transform -translate-y-1/2">
                   <button
                     onClick={handleAttachmentClick}
                     className="text-black hover:text-purple-600 transition-colors p-1"
@@ -191,43 +151,10 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
                     className="hidden"
                   />
                 </div>
-                
-                {/* Send Button */}
-                <button
-                  onClick={handleSubmit}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white p-3 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                </button>
               </div>
             </motion.div>
           </div>
 
-          {/* Features Grid */}
-          <div className="mb-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={feature.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  className="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-200"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-4xl">{feature.icon}</div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium text-white ${feature.statusColor}`}>
-                      {feature.status}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-black mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
 
           {/* CTA Section */}
           <motion.div
