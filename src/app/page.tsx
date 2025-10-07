@@ -69,6 +69,8 @@ export default function HomePage() {
   
   const auctionRef = useRef<NodeJS.Timeout | null>(null);
   const commentaryRef = useRef<NodeJS.Timeout | null>(null);
+  // Snapshot of previous state to generate event-driven commentary
+  const prevSnapshotRef = useRef<{ bids: Record<string, number>; compliance: Record<string, boolean>; leaderId?: string } | null>(null);
 
   // Cleanup intervals on unmount
   useEffect(() => {
@@ -205,28 +207,73 @@ export default function HomePage() {
   };
 
   const generateAuctionCommentary = (status: AuctionStatus) => {
-    if (status.leader && status.vendors.length > 0) {
-      const secondPlace = status.vendors
-        .filter(v => v.id !== status.leader?.id)
-        .sort((a, b) => a.currentBid - b.currentBid)[0];
-      
-      const commentary = generateCommentary(
-        status.round,
-        status.leader.name,
-        status.leader.bid,
-        secondPlace?.name,
-        secondPlace?.currentBid
-      );
-      
-      setIsCommentaryTyping(true);
-      setCurrentCommentary('');
-      
-      // Simulate typing delay
-      setTimeout(() => {
-        setIsCommentaryTyping(false);
-        setCurrentCommentary(commentary);
-      }, Math.random() * 500 + 500);
+    const prev = prevSnapshotRef.current;
+    const bids: Record<string, number> = {};
+    const compliance: Record<string, boolean> = {};
+    status.vendors.forEach(v => { bids[v.id] = v.currentBid; compliance[v.id] = v.isCompliant; });
+
+    let message = '';
+    const leaderId = status.leader?.id;
+
+    // Leader change
+    if (leaderId && prev?.leaderId && leaderId !== prev.leaderId) {
+      const newLeader = status.vendors.find(v => v.id === leaderId)!;
+      message = `${newLeader.name} takes the lead at $${newLeader.currentBid.toFixed(2)}!`;
     }
+
+    // Biggest price drop since last tick
+    if (!message && prev) {
+      let biggestDropVendor: string | null = null;
+      let biggestDrop = 0;
+      status.vendors.forEach(v => {
+        const prevBid = prev.bids[v.id];
+        if (prevBid !== undefined) {
+          const drop = prevBid - v.currentBid;
+          if (drop > biggestDrop + 0.009) {
+            biggestDrop = drop;
+            biggestDropVendor = v.name;
+          }
+        }
+      });
+      if (biggestDropVendor) {
+        const leader = status.leader!;
+        message = `${biggestDropVendor} drops $${biggestDrop.toFixed(2)}. ${leader.name} leads at $${leader.bid.toFixed(2)}.`;
+      }
+    }
+
+    // Compliance advantage at same price
+    if (!message && leaderId) {
+      const leader = status.vendors.find(v => v.id === leaderId)!;
+      const challenger = status.vendors
+        .filter(v => v.id !== leaderId && Math.abs(v.currentBid - leader.currentBid) < 0.01)
+        .find(v => v.isCompliant && !leader.isCompliant);
+      if (challenger) {
+        message = `${challenger.name} matches price and is more compliant — pressure on ${leader.name}!`;
+      }
+    }
+
+    // Fallback generic
+    if (!message) {
+      const runnerUp = status.vendors
+        .filter(v => v.id !== leaderId)
+        .sort((a, b) => a.currentBid - b.currentBid)[0];
+      message = generateCommentary(
+        status.round,
+        status.leader?.name || 'Leader',
+        status.leader?.bid || 0,
+        runnerUp?.name,
+        runnerUp?.currentBid
+      );
+    }
+
+    prevSnapshotRef.current = { bids, compliance, leaderId };
+
+    setIsCommentaryTyping(true);
+    setCurrentCommentary('');
+    setTimeout(() => {
+      setIsCommentaryTyping(false);
+      setCurrentCommentary(message);
+    }, 350);
   };
 
   const handleGeneratePO = async () => {
@@ -377,6 +424,8 @@ export default function HomePage() {
           onClose={() => {
             setShowResults(false);
             setShowConfetti(false);
+            // Ensure user can continue chatting after results
+            setIsPitchMode(false);
           }}
           winner={auctionStatus?.leader ? {
             id: auctionStatus.leader.id,
