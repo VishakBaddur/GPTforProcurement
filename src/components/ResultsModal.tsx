@@ -71,7 +71,7 @@ export default function ResultsModal({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-[#e6eef3]">Auction Results</h2>
+            <h2 className="text-2xl font-bold text-[#e6eef3]">Auction Results - FIXED!</h2>
             <button
               onClick={() => {
                 console.log('Close button clicked');

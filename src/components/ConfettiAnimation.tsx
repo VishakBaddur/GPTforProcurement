@@ -12,7 +12,7 @@ export default function ConfettiAnimation({ isActive }: ConfettiAnimationProps) 
     if (isActive) {
       // Create confetti effect
       const createConfetti = () => {
-        const colors = ['#00bfff', '#ff6f61', '#10b981', '#f59e0b', '#8b5cf6'];
+        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
         const confettiCount = 50;
         const confettiElements: HTMLElement[] = [];
         
