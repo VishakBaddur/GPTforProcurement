@@ -114,7 +114,7 @@ export default function FeaturesPage() {
               className="text-4xl md:text-6xl font-bold text-black mb-6"
             >
               Complete{' '}
-              <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
+              <span className="text-purple-600">
                 source-to-pay
               </span>
             </motion.h1>
