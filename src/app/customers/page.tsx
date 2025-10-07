@@ -49,19 +49,19 @@ export default function CustomersPage() {
               <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="text-procurvv-text font-semibold text-xl">Procurvv</span>
+              <span className="text-black font-semibold text-xl">Procurvv</span>
             </div>
             
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="/features" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Features</a>
-              <a href="/how-it-works" className="text-procurvv-text hover:text-procurvv-accent transition-colors">How it works</a>
+              <a href="/features" className="text-black hover:text-purple-600 transition-colors">Features</a>
+              <a href="/how-it-works" className="text-black hover:text-purple-600 transition-colors">How it works</a>
               <a href="/customers" className="text-procurvv-accent font-medium">Customers</a>
             </nav>
             
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">
+              <a href="#" className="text-black hover:text-purple-600 transition-colors">
                 Sign in
               </a>
               <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
@@ -81,7 +81,7 @@ export default function CustomersPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-6xl font-bold text-procurvv-text mb-6"
+              className="text-4xl md:text-6xl font-bold text-black mb-6"
             >
               Trusted by procurement{' '}
               <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
@@ -229,7 +229,7 @@ export default function CustomersPage() {
                   <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-lg">P</span>
                   </div>
-                  <span className="text-procurvv-text font-semibold text-xl">Procurvv</span>
+                  <span className="text-black font-semibold text-xl">Procurvv</span>
                 </div>
                 <p className="text-procurvv-text text-sm mb-4">
                   The AI copilot that transforms procurement from source-to-pay with intelligent automation.

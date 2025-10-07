@@ -64,21 +64,21 @@ export default function HowItWorksPage() {
               <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="text-procurvv-text font-semibold text-xl">Procurvv</span>
+              <span className="text-black font-semibold text-xl">Procurvv</span>
             </div>
             
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="/features" className="text-procurvv-text hover:text-procurvv-accent transition-colors">Features</a>
+              <a href="/features" className="text-black hover:text-purple-600 transition-colors">Features</a>
               <a href="/how-it-works" className="text-procurvv-accent font-medium">How it works</a>
-              <a href="/customers" className="text-procurvv-text hover:text-procurvv-accent transition-colors">
+              <a href="/customers" className="text-black hover:text-purple-600 transition-colors">
                 Customers
               </a>
             </nav>
             
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-procurvv-text hover:text-procurvv-accent transition-colors">
+              <a href="#" className="text-black hover:text-purple-600 transition-colors">
                 Sign in
               </a>
               <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-6 py-2 rounded-lg hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium">
@@ -98,7 +98,7 @@ export default function HowItWorksPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block text-sm text-procurvv-text mb-4"
+              className="inline-block text-sm text-black mb-4"
             >
               How it works
             </motion.div>
@@ -107,7 +107,7 @@ export default function HowItWorksPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-4xl md:text-6xl font-bold text-procurvv-text mb-6"
+              className="text-4xl md:text-6xl font-bold text-black mb-6"
             >
               From prompt to{' '}
               <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
@@ -119,7 +119,7 @@ export default function HowItWorksPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="text-xl text-procurvv-text max-w-2xl mx-auto"
+              className="text-xl text-black max-w-2xl mx-auto"
             >
               Our AI agents handle the entire workflow, so you can focus on strategic decisions.
             </motion.p>
