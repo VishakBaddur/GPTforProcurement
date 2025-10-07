@@ -374,7 +374,10 @@ export default function HomePage() {
       {showResults && (
         <ResultsModal
           isOpen={showResults}
-          onClose={() => setShowResults(false)}
+          onClose={() => {
+            setShowResults(false);
+            setShowConfetti(false);
+          }}
           winner={auctionStatus?.leader ? {
             id: auctionStatus.leader.id,
             name: auctionStatus.leader.name,
