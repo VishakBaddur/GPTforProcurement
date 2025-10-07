@@ -260,14 +260,14 @@ export default function HomePage() {
       {/* Header */}
       <div className="bg-procurvv-dark-bg border-b border-procurvv-dark-border p-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <a href="/" className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-procurvv-accent rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">P</span>
             </div>
             <h1 className="text-2xl font-bold text-procurvv-dark-text">
               Procurvv
             </h1>
-          </div>
+          </a>
           <div className="flex items-center space-x-6">
             <a href="/" className="text-procurvv-dark-muted hover:text-procurvv-dark-text transition-colors">← Back to Home</a>
             <a href="/features" className="text-procurvv-dark-muted hover:text-procurvv-dark-text transition-colors">Features</a>
