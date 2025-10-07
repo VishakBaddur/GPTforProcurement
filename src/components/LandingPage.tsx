@@ -161,7 +161,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="text-center bg-gray-50 rounded-3xl p-12 mb-16"
+            className="text-center bg-gray-50 rounded-3xl p-12 mb-16 opacity-100"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
               Ready to transform your procurement?
@@ -170,10 +170,10 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
               Join 150+ companies already simplifying their source-to-pay with Procurvv.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-4 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-medium text-lg">
+              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-4 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-semibold text-lg opacity-100">
                 Get started
               </button>
-              <button className="bg-white border-2 border-procurvv-accent text-procurvv-accent px-8 py-4 rounded-xl hover:bg-procurvv-accent hover:text-white transition-all duration-200 font-medium text-lg">
+              <button className="bg-white border-2 border-procurvv-accent text-procurvv-accent px-8 py-4 rounded-xl hover:bg-procurvv-accent hover:text-white transition-all duration-200 font-semibold text-lg opacity-100">
                 Book a demo
               </button>
             </div>
