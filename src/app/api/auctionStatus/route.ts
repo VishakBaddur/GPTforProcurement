@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Get current leader
-    const leader = auction.vendors.length > 0 ? 
+    const leader = auction.vendors && auction.vendors.length > 0 ? 
       auction.vendors.reduce((lowest, vendor) => 
         vendor.currentBid < lowest.currentBid ? vendor : lowest
       ) : null;
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
         bid: leader.currentBid,
         isCompliant: leader.isCompliant
       } : null,
-      vendors: auction.vendors.map(v => ({
+      vendors: (auction.vendors || []).map(v => ({
         id: v.id,
         name: v.name,
         currentBid: v.currentBid,

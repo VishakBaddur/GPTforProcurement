@@ -172,15 +172,26 @@ export default function HomePage() {
     auctionRef.current = setInterval(async () => {
       try {
         const response = await fetch(`/api/auctionStatus?auctionId=${auctionId}`);
+        if (!response.ok) {
+          // If the function cold-started and lost state, skip this tick gracefully
+          console.warn('auctionStatus not ok:', response.status);
+          return;
+        }
         const status = await response.json();
-        
+
+        // Guard against unexpected shapes
+        if (!status || !Array.isArray(status.vendors)) {
+          console.warn('auctionStatus missing vendors; skipping update');
+          return;
+        }
+
         setAuctionStatus(status);
-        
+
         // Generate commentary
-        if (status.leader && status.vendors) {
+        if (status.leader && status.vendors.length > 0) {
           generateAuctionCommentary(status);
         }
-        
+
         // Check if auction ended
         if (status.status === 'ended') {
           clearInterval(auctionRef.current!);
