@@ -54,9 +54,9 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-procurvv-bg">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-procurvv-border">
+      <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -110,7 +110,7 @@ export default function HowItWorksPage() {
               className="text-4xl md:text-6xl font-bold text-black mb-6"
             >
               From prompt to{' '}
-              <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
+              <span className="text-purple-600">
                 procurement
               </span>
             </motion.h1>
@@ -138,12 +138,12 @@ export default function HowItWorksPage() {
                 >
                   {/* Connection Line */}
                   {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute top-16 left-1/2 w-full h-0.5 bg-procurvv-border transform translate-x-8 z-0">
-                      <div className="absolute top-1/2 right-0 w-2 h-2 bg-procurvv-border rounded-full transform -translate-y-1/2"></div>
+                    <div className="hidden lg:block absolute top-16 left-1/2 w-full h-0.5 bg-gray-300 transform translate-x-8 z-0">
+                      <div className="absolute top-1/2 right-0 w-2 h-2 bg-gray-300 rounded-full transform -translate-y-1/2"></div>
                     </div>
                   )}
                   
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-procurvv-border relative z-10">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 relative z-10">
                     {/* Number Circle */}
                     <div className={`w-12 h-12 bg-gradient-to-r ${step.color} rounded-full flex items-center justify-center text-white font-bold text-lg mb-6`}>
                       {step.number}
@@ -155,10 +155,10 @@ export default function HowItWorksPage() {
                     </div>
                     
                     {/* Content */}
-                    <h3 className="text-xl font-bold text-procurvv-text mb-4">
+                    <h3 className="text-xl font-bold text-black mb-4">
                       {step.title}
                     </h3>
-                    <p className="text-procurvv-text leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed">
                       {step.description}
                     </p>
                   </div>
@@ -181,10 +181,10 @@ export default function HowItWorksPage() {
                   <div className="w-16 h-16 bg-gradient-to-br from-procurvv-accent/10 to-procurvv-accent-light/10 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
                     {benefit.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-procurvv-text mb-3">
+                  <h3 className="text-xl font-bold text-black mb-3">
                     {benefit.title}
                   </h3>
-                  <p className="text-procurvv-text">
+                  <p className="text-gray-600">
                     {benefit.description}
                   </p>
                 </motion.div>
@@ -200,7 +200,7 @@ export default function HowItWorksPage() {
             className="text-center"
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a href="#" className="text-procurvv-accent hover:text-procurvv-accent-dark transition-colors flex items-center space-x-2">
+              <a href="#" className="text-purple-600 hover:text-purple-700 transition-colors flex items-center space-x-2">
                 <span>•</span>
                 <span>See it in action — watch AI agents work in real-time</span>
               </a>
