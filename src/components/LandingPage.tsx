@@ -99,7 +99,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
             className="text-5xl md:text-7xl font-bold text-black mb-6"
           >
             The AI Copilot for{' '}
-            <span className="bg-gradient-to-r from-procurvv-accent-blue to-procurvv-accent bg-clip-text text-transparent">
+            <span className="text-purple-600">
               Procurement - TESTING DEPLOYMENT!
             </span>
           </motion.h1>
@@ -128,7 +128,7 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="What procurement task can I help you with today?"
-              className="w-full bg-white border border-procurvv-border rounded-2xl px-6 py-4 text-procurvv-text placeholder-procurvv-muted focus:outline-none focus:ring-2 focus:ring-procurvv-accent focus:border-transparent shadow-sm text-lg"
+              className="w-full bg-white border border-gray-300 rounded-2xl px-6 py-4 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent shadow-sm text-lg"
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
                   handleSubmit();
