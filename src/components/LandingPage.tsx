@@ -170,10 +170,10 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
               Join 150+ companies already simplifying their source-to-pay with Procurvv.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-procurvv-accent to-procurvv-accent-blue text-white px-8 py-4 rounded-xl hover:from-procurvv-accent-dark hover:to-procurvv-accent-blue-light transition-all duration-200 font-semibold text-lg opacity-100">
+              <button className="inline-flex items-center justify-center bg-procurvv-accent text-white px-8 py-4 rounded-xl shadow-md hover:shadow-lg hover:bg-procurvv-accent-dark transition-colors duration-200 font-semibold text-lg">
                 Get started
               </button>
-              <button className="bg-white border-2 border-procurvv-accent text-procurvv-accent px-8 py-4 rounded-xl hover:bg-procurvv-accent hover:text-white transition-all duration-200 font-semibold text-lg opacity-100">
+              <button className="inline-flex items-center justify-center bg-white border-2 border-procurvv-accent text-black px-8 py-4 rounded-xl hover:bg-procurvv-accent hover:text-white transition-colors duration-200 font-semibold text-lg">
                 Book a demo
               </button>
             </div>
