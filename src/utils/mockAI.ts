@@ -10,6 +10,27 @@ export function generateAIResponse(text: string, slots: ParsedSlots): AIResponse
   // Simulate AI processing delay
   const processingTime = Math.random() * 600 + 600; // 600-1200ms
   
+  // Check for auction-related questions (post-auction reasoning)
+  const auctionKeywords = ['winner', 'decision', 'why', 'reason', 'price', 'final', 'conditions', 'compliance', 'auction', 'result'];
+  const isAuctionQuestion = auctionKeywords.some(keyword => 
+    text.toLowerCase().includes(keyword)
+  );
+  
+  if (isAuctionQuestion) {
+    const auctionResponses = [
+      "The winner was selected based on the lowest compliant bid that met all your requirements. They offered the best price while maintaining full compliance with delivery and warranty terms.",
+      "I chose this vendor because they provided the most competitive pricing while meeting all compliance criteria. Their bid was the lowest among vendors who could deliver within your timeline.",
+      "The decision was based on a combination of factors: competitive pricing, compliance with your requirements, and delivery capability. This vendor offered the best overall value proposition.",
+      "This vendor won because they met all your criteria at the lowest price point. They demonstrated full compliance with your delivery timeline and warranty requirements.",
+      "The selection process prioritized vendors who could meet all your requirements. Among compliant vendors, this one offered the most competitive pricing for your procurement needs."
+    ];
+    
+    return {
+      action: 'ok',
+      message: auctionResponses[Math.floor(Math.random() * auctionResponses.length)]
+    };
+  }
+  
   // Check if we have enough information
   const hasItem = !!slots.item;
   const hasQuantity = !!slots.quantity;

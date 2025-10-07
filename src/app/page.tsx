@@ -340,29 +340,6 @@ export default function HomePage() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-16">
-        {/* Chat Interface - Main Focus */}
-        <div className="mb-8">
-          <div className="space-y-4 mb-6">
-            <AnimatePresence>
-              {messages.map((message) => (
-                <MessageBubble
-                  key={message.id}
-                  message={message.text}
-                  isUser={message.isUser}
-                  timestamp={message.timestamp}
-                  isTyping={message.isTyping}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-          
-          <ChatBox
-            onSendMessage={handleSendMessage}
-            disabled={isLoading || isPitchMode}
-            placeholder="Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"
-          />
-        </div>
-
         {/* Parsed Summary */}
         {parsedSlots && (
           <ParsedSummaryCard
@@ -421,6 +398,38 @@ export default function HomePage() {
         {auctionStatus && (
           <BiddingFeed events={auctionStatus.events} />
         )}
+
+        {/* Chat Interface - Below Auction (Next Step) */}
+        <div className="mt-12 mb-8">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-procurvv-dark-text mb-4">
+              {auctionStatus ? 'Discuss the Results' : 'Chat with Procurement Assistant'}
+            </h2>
+            <p className="text-procurvv-dark-muted text-sm">
+              {auctionStatus ? 'Ask questions about the auction results, winner selection, or procurement details.' : 'Describe your procurement needs to get started.'}
+            </p>
+          </div>
+          
+          <div className="space-y-4 mb-6">
+            <AnimatePresence>
+              {messages.map((message) => (
+                <MessageBubble
+                  key={message.id}
+                  message={message.text}
+                  isUser={message.isUser}
+                  timestamp={message.timestamp}
+                  isTyping={message.isTyping}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+          
+          <ChatBox
+            onSendMessage={handleSendMessage}
+            disabled={isLoading || isPitchMode}
+            placeholder={auctionStatus ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" : "Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"}
+          />
+        </div>
       </div>
 
       {/* Results Modal */}
