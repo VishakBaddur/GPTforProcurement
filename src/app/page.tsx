@@ -66,6 +66,7 @@ export default function HomePage() {
   const [currentCommentary, setCurrentCommentary] = useState('');
   const [isCommentaryTyping, setIsCommentaryTyping] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isAuctionDiscussionMode, setIsAuctionDiscussionMode] = useState(false);
   
   const auctionRef = useRef<NodeJS.Timeout | null>(null);
   const commentaryRef = useRef<NodeJS.Timeout | null>(null);
@@ -107,8 +108,44 @@ export default function HomePage() {
   };
 
   const handleSendMessage = async (text: string) => {
+    // Check for reset keywords
+    const resetKeywords = ['new auction', 'start new', 'new procurement', 'reset', 'start over', 'begin again'];
+    const isResetRequest = resetKeywords.some(keyword => 
+      text.toLowerCase().includes(keyword)
+    );
+    
+    if (isResetRequest) {
+      // Reset to initial state
+      setMessages([]);
+      setParsedSlots(null);
+      setAuctionStatus(null);
+      setAuctionId(null);
+      setIsAuctionDiscussionMode(false);
+      setShowResults(false);
+      setShowPOPreview(false);
+      setShowConfetti(false);
+      setIsPitchMode(false);
+      setCurrentCommentary('');
+      setIsCommentaryTyping(false);
+      
+      // Clear any pending timeouts
+      if (auctionRef.current) clearInterval(auctionRef.current);
+      if (commentaryRef.current) clearTimeout(commentaryRef.current);
+      if (endModalTimeoutRef.current) clearTimeout(endModalTimeoutRef.current as number);
+      if (confettiOffTimeoutRef.current) clearTimeout(confettiOffTimeoutRef.current as number);
+      
+      // Add reset confirmation message
+      addMessage("Great! Let's start fresh. What would you like to procure today? Please tell me about your procurement needs - what items, quantity, budget, and delivery timeline you're looking for.", false);
+      return;
+    }
+    
     // Add user message
     addMessage(text, true);
+    
+    // If we have auction results, we're in discussion mode
+    if (auctionStatus && !isAuctionDiscussionMode) {
+      setIsAuctionDiscussionMode(true);
+    }
     
     // Add typing indicator
     const typingId = addMessage('', false, true);
@@ -403,10 +440,12 @@ export default function HomePage() {
         <div className="mt-12 mb-8">
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-procurvv-dark-text mb-4">
-              {auctionStatus ? 'Discuss the Results' : 'Chat with Procurement Assistant'}
+              {isAuctionDiscussionMode ? 'Discuss the Results' : 'Chat with Procurement Assistant'}
             </h2>
             <p className="text-procurvv-dark-muted text-sm">
-              {auctionStatus ? 'Ask questions about the auction results, winner selection, or procurement details.' : 'Describe your procurement needs to get started.'}
+              {isAuctionDiscussionMode 
+                ? 'Ask questions about the auction results, winner selection, or procurement details. Say "new auction" to start fresh.' 
+                : 'Describe your procurement needs to get started.'}
             </p>
           </div>
           
@@ -427,7 +466,9 @@ export default function HomePage() {
           <ChatBox
             onSendMessage={handleSendMessage}
             disabled={isLoading || isPitchMode}
-            placeholder={auctionStatus ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" : "Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"}
+            placeholder={isAuctionDiscussionMode 
+              ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
+              : "Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"}
           />
         </div>
       </div>
