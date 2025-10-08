@@ -113,67 +113,85 @@ export function generateAIResponse(text: string, slots: ParsedSlots): AIResponse
     };
   }
   
-  // If we have 2 or more fields, ask for the most important missing one
+  // Build contextual responses based on what we already know
+  const contextualResponses = [];
+  
+  // Acknowledge what we have
+  if (hasItem) contextualResponses.push(`${slots.quantity ? slots.quantity + ' ' : ''}${slots.item}`);
+  if (hasQuantity && !hasItem) contextualResponses.push(`${slots.quantity} units`);
+  if (hasBudget) contextualResponses.push(`budget of $${slots.budget || slots.maxBudget}`);
+  if (hasDelivery) contextualResponses.push(`delivery in ${slots.deliveryDays} days`);
+  
+  const acknowledgment = contextualResponses.length > 0 ? 
+    `Got it - ${contextualResponses.join(', ')}. ` : '';
+  
+  // If we have 2 or more fields, ask for the most important missing one with context
   if (fieldCount >= 2) {
     if (!hasItem) {
       return {
         action: 'clarify',
-        message: "What item or service are you looking to procure?"
+        message: `${acknowledgment}What specific item or service are you looking to procure?`
       };
     }
     if (!hasQuantity) {
       return {
         action: 'clarify',
-        message: "How many units do you need?"
+        message: `${acknowledgment}How many ${slots.item || 'units'} do you need?`
       };
     }
     if (!hasBudget) {
       return {
         action: 'clarify',
-        message: "What's your budget for this procurement?"
+        message: `${acknowledgment}What's your budget for ${slots.quantity ? slots.quantity + ' ' : ''}${slots.item || 'this procurement'}?`
       };
     }
     if (!hasDelivery) {
       return {
         action: 'clarify',
-        message: "When do you need delivery?"
+        message: `${acknowledgment}When do you need delivery for ${slots.quantity ? slots.quantity + ' ' : ''}${slots.item || 'this order'}?`
       };
     }
   }
   
-  // If we have less than 2 fields, ask for the most critical ones
+  // If we have less than 2 fields, ask for the most critical ones with context
   if (!hasItem) {
     return {
       action: 'clarify',
-      message: "What item or service are you looking to procure?"
+      message: `${acknowledgment}What item or service are you looking to procure?`
     };
   }
   
   if (!hasQuantity) {
     return {
       action: 'clarify',
-      message: "How many units do you need?"
+      message: `${acknowledgment}How many ${slots.item} do you need?`
     };
   }
   
   if (!hasBudget) {
     return {
       action: 'clarify',
-      message: "What's your budget for this procurement?"
+      message: `${acknowledgment}What's your budget for ${slots.quantity ? slots.quantity + ' ' : ''}${slots.item}?`
     };
   }
   
   if (!hasDelivery) {
     return {
       action: 'clarify',
-      message: "When do you need delivery?"
+      message: `${acknowledgment}When do you need delivery for ${slots.quantity ? slots.quantity + ' ' : ''}${slots.item}?`
     };
   }
   
-  // Fallback
+  // Fallback - provide more helpful guidance
+  const fallbackMessages = [
+    "I'd be happy to help you set up a procurement auction! To get started, I need a few details: what items you need, how many, your budget, and when you need delivery. For example: 'I need 50 office chairs under $200 each, delivered within 2 weeks.'",
+    "Let me help you find the best vendors! Please tell me more about your procurement needs. I need to know: what you're buying, the quantity, your budget, and delivery timeline. You can say something like: 'I need 100 laptops under $800 each, delivered in 30 days.'",
+    "I'm ready to set up a competitive auction for you! To get the best results, please provide: the items you need, quantity, budget, and delivery requirements. For example: 'I need 25 desks under $300 each, delivered within 3 weeks.'"
+  ];
+  
   return {
     action: 'clarify',
-    message: "I need a bit more information. Could you tell me what you're looking to procure, how many you need, your budget, and when you need delivery?"
+    message: fallbackMessages[Math.floor(Math.random() * fallbackMessages.length)]
   };
 }
 
