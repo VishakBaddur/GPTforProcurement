@@ -31,12 +31,14 @@ export function parseRequest(text: string): ParsedSlots {
     }
   }
 
-  // More flexible delivery parsing
+  // More flexible delivery parsing - require explicit time words
   const deliveryPatterns = [
-    /(\d+)\s*(?:days?|d)/i,
-    /(\d+)\s*(?:weeks?|w)/i,
+    /(\d+)\s*(?:days?|d)\b/i,
+    /(\d+)\s*(?:weeks?|w)\b/i,
     /within\s*(\d+)\s*(?:days?|weeks?)/i,
-    /in\s*(\d+)\s*(?:days?|weeks?)/i
+    /in\s*(\d+)\s*(?:days?|weeks?)/i,
+    /delivered?\s*(?:in|within)\s*(\d+)\s*(?:days?|weeks?)/i,
+    /delivery\s*(?:in|within)\s*(\d+)\s*(?:days?|weeks?)/i
   ];
   
   let deliveryDays = null;

@@ -93,8 +93,9 @@ export function generateAIResponse(text: string, slots: ParsedSlots): AIResponse
   const hasQuantity = !!slots.quantity;
   const hasBudget = !!(slots.budget || slots.maxBudget);
   const hasDelivery = !!slots.deliveryDays;
+  const hasWarranty = !!slots.warranty;
   
-  // Count how many fields we have
+  // Count how many fields we have (warranty is optional)
   const fieldCount = [hasItem, hasQuantity, hasBudget, hasDelivery].filter(Boolean).length;
   
   // If we have at least 3 out of 4 fields, we're good to proceed
@@ -137,6 +138,7 @@ export function generateAIResponse(text: string, slots: ParsedSlots): AIResponse
   }
   if (hasBudget) contextualResponses.push(`budget of $${slots.budget || slots.maxBudget}`);
   if (hasDelivery) contextualResponses.push(`delivery in ${slots.deliveryDays} days`);
+  if (hasWarranty) contextualResponses.push(`warranty ${slots.warranty}`);
   
   const acknowledgment = contextualResponses.length > 0 ? 
     `Got it - ${contextualResponses.join(', ')}. ` : '';
@@ -205,6 +207,22 @@ export function generateAIResponse(text: string, slots: ParsedSlots): AIResponse
       return {
         action: 'clarify',
         message: deliveryQuestions[Math.floor(Math.random() * deliveryQuestions.length)]
+      };
+    }
+    
+    // Ask about warranty if we have the core requirements but no warranty
+    if (!hasWarranty && fieldCount >= 3) {
+      const warrantyQuestions = [
+        `${acknowledgment}What warranty period are you looking for?`,
+        `${acknowledgment}Do you need any warranty coverage for ${slots.quantity ? slots.quantity + ' ' : ''}${slots.item || 'this order'}?`,
+        `${acknowledgment}What warranty terms do you require?`,
+        `${acknowledgment}Are you looking for any warranty protection?`,
+        `${acknowledgment}What warranty period would you prefer?`,
+        `${acknowledgment}Do you need warranty coverage for ${slots.quantity ? slots.quantity + ' ' : ''}${slots.item || 'this procurement'}?`
+      ];
+      return {
+        action: 'clarify',
+        message: warrantyQuestions[Math.floor(Math.random() * warrantyQuestions.length)]
       };
     }
   }
