@@ -81,10 +81,15 @@ Current context: ${JSON.stringify(base)}
           })
         });
 
+        console.log('Groq API response status:', response.status);
         if (response.ok) {
           const data = await response.json();
           aiMessage = data.choices?.[0]?.message?.content || null;
           console.log('Groq response received:', aiMessage?.substring(0, 100) + '...');
+        } else {
+          const errorText = await response.text();
+          console.log('Groq API error:', response.status, errorText);
+        }
           
           // Try to extract procurement details from the response
           try {
