@@ -1,10 +1,10 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import ChatInterface from '@/components/ChatInterface';
 
-export default function ChatPage() {
+function ChatPageInner() {
   const searchParams = useSearchParams();
   const [userEmail, setUserEmail] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
@@ -12,14 +12,14 @@ export default function ChatPage() {
   useEffect(() => {
     // Get email from URL params or localStorage
     const emailFromParams = searchParams.get('email');
-    const emailFromStorage = localStorage.getItem('procurvv-user-email');
+    const emailFromStorage = localStorage.getItem('procurv-user-email') || localStorage.getItem('procurvv-user-email');
     
-    const email = emailFromParams || emailFromStorage;
+    const email = emailFromParams || emailFromStorage || '';
     
     if (email) {
       setUserEmail(email);
       // Store email for developer reference
-      localStorage.setItem('procurvv-user-email', email);
+      localStorage.setItem('procurv-user-email', email);
       
       // Log email for developer reference (in production, this would go to your database)
       console.log('New user accessed chat:', { email, timestamp: new Date().toISOString() });
@@ -57,4 +57,12 @@ export default function ChatPage() {
   }
 
   return <ChatInterface userEmail={userEmail} />;
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50"><p className="text-gray-600">Loading…</p></div>}>
+      <ChatPageInner />
+    </Suspense>
+  );
 }
