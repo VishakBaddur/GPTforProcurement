@@ -124,6 +124,32 @@ Option A — Upload your vendor list now (paperclip).\nOption B — Start the re
 Reply with “Upload” or “Start auction”.`;
       }
     }
+
+    // General chat fallback: if nothing changed in slots and user isn't asking for upload/start, let the LLM reply normally
+    const userAskedGeneral = !/upload|start auction|begin auction|launch auction/i.test(text);
+    const noSlotProgress = Object.keys(parseRequest(text) || {}).length === 0;
+    if (process.env.GROQ_API_KEY && userAskedGeneral && noSlotProgress) {
+      try {
+        const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+          body: JSON.stringify({
+            model: 'llama-3.1-8b-instruct',
+            temperature: 0.4,
+            max_tokens: 384,
+            messages: [
+              { role: 'system', content: 'You are a concise, friendly assistant. If procurement context exists, be helpful but do not force the user back to forms.' },
+              { role: 'user', content: text }
+            ]
+          })
+        });
+        if (resp.ok) {
+          const d = await resp.json();
+          const general = d.choices?.[0]?.message?.content;
+          if (general) aiMessage = general;
+        }
+      } catch {}
+    }
     
     // Add telemetry (console log for demo)
     console.log('chat_message_submitted', { text, parsedSlots: slots });
