@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { parseRequest, validateSlots } from '../../../utils/parseRequest';
 
 export async function POST(req: NextRequest) {
+  console.log('=== /api/chat called ===');
   try {
     const body = await req.json();
     const { text, contextSlots } = body;
+    console.log('Request body:', { text, contextSlots });
     
     if (!text || typeof text !== 'string') {
       return NextResponse.json({ error: 'Text is required' }, { status: 400 });
