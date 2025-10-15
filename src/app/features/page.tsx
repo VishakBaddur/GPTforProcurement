@@ -66,7 +66,7 @@ export default function FeaturesPage() {
               <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="text-black font-semibold text-xl">Procurvv</span>
+              <span className="text-black font-semibold text-xl">Procurv</span>
             </a>
             
             {/* Navigation */}

@@ -86,6 +86,15 @@ export default function HomePage() {
   }, []);
 
   const handleStartChat = (text?: string) => {
+    // Check if user has email access
+    const userEmail = localStorage.getItem('procurvv-user-email');
+    if (userEmail) {
+      // User has email access, redirect to dedicated chat interface
+      window.location.href = `/chat?email=${encodeURIComponent(userEmail)}`;
+      return;
+    }
+    
+    // Fallback to original behavior for users without email
     setShowLanding(false);
     if (text) {
       // If text is provided, send it as a message
@@ -96,8 +105,11 @@ export default function HomePage() {
   };
 
   const addMessage = (text: string, isUser: boolean, isTyping = false) => {
+    const uniqueId = (typeof crypto !== 'undefined' && 'randomUUID' in crypto)
+      ? (crypto as any).randomUUID()
+      : `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
     const message: Message = {
-      id: Date.now().toString(),
+      id: uniqueId,
       text,
       isUser,
       timestamp: new Date(),
@@ -151,10 +163,34 @@ export default function HomePage() {
     const typingId = addMessage('', false, true);
     
     try {
+      // If user is asking for reasoning during/after auction, call summarize endpoint
+      const wantsReason = /why|winner|chosen|reason|explain|how select/i.test(text) && (auctionStatus !== null);
+      if (wantsReason && auctionStatus) {
+        const topBids = (auctionStatus.vendors || [])
+          .map(v => ({ vendor: v.name, price: v.currentBid, compliant: v.isCompliant }))
+          .sort((a,b) => a.price - b.price)
+          .slice(0, 5);
+        const leaderVendor = auctionStatus.leader ? auctionStatus.vendors.find(v => v.id === auctionStatus.leader!.id) : undefined;
+        const sorted = [...(auctionStatus.vendors || [])].sort((a,b) => a.currentBid - b.currentBid);
+        const leader = sorted[0] ? { vendor: sorted[0].name, price: sorted[0].currentBid, compliant: sorted[0].isCompliant } : undefined;
+        const runnerUp = sorted[1] ? { vendor: sorted[1].name, price: sorted[1].currentBid, compliant: sorted[1].isCompliant } : undefined;
+        const priceGap = leader && runnerUp ? (runnerUp.price - leader.price).toFixed(2) : undefined;
+        const complianceNotes = leader && runnerUp ? (leader.compliant && !runnerUp.compliant ? `${leader.vendor} has compliance advantage.` : (runnerUp.compliant && !leader.compliant ? `${runnerUp.vendor} is compliant while leader is not.` : 'No clear compliance advantage.')) : 'N/A';
+        const sumResp = await fetch('/api/summarize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ round: auctionStatus.round, topBids, leader, runnerUp, priceGap, complianceNotes, context: 'User asked: ' + text })
+        });
+        const sumData = await sumResp.json();
+        setMessages(prev => prev.filter(m => m.id !== typingId));
+        addMessage(sumData.summary || 'Here is a brief explanation based on current bids and compliance.', false);
+        return;
+      }
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ text, contextSlots: parsedSlots })
       });
       
       const data = await response.json();
@@ -165,7 +201,8 @@ export default function HomePage() {
       // Add AI response
       addMessage(data.message, false);
       
-      if (data.action === 'preview' && data.slots) {
+      // Persist any extracted slots (even during clarification steps)
+      if (data.slots) {
         setParsedSlots(data.slots);
       }
     } catch (error) {
@@ -181,6 +218,13 @@ export default function HomePage() {
     setIsLoading(true);
     
     try {
+      // Read uploaded suppliers if any
+      let uploadedVendors: any[] | undefined = undefined;
+      try {
+        const raw = localStorage.getItem('procurv-uploaded-suppliers');
+        if (raw) uploadedVendors = JSON.parse(raw);
+      } catch {}
+
       // Create auction
       const createResponse = await fetch('/api/createAuction', {
         method: 'POST',
@@ -195,7 +239,7 @@ export default function HomePage() {
       const startResponse = await fetch('/api/startAuction', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ auctionId })
+        body: JSON.stringify({ auctionId, vendors: uploadedVendors })
       });
       
       if (startResponse.ok) {
@@ -364,7 +408,7 @@ export default function HomePage() {
               <span className="text-white font-bold text-lg">P</span>
             </div>
             <h1 className="text-2xl font-bold text-procurvv-dark-text">
-              Procurvv
+              Procurv
             </h1>
           </a>
           <div className="flex items-center space-x-6">
@@ -385,6 +429,40 @@ export default function HomePage() {
             isLoading={isLoading}
           />
         )}
+
+        {/* Chat – keep pre-auction conversation ABOVE auction widgets */}
+        <div className="mt-8 mb-8">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-procurvv-dark-text mb-4">
+              {isAuctionDiscussionMode ? 'Discuss the Results' : 'Chat with Procurement Assistant'}
+            </h2>
+            <p className="text-procurvv-dark-muted text-sm">
+              {isAuctionDiscussionMode 
+                ? 'Ask questions about the auction results, winner selection, or procurement details. Say "new auction" to start fresh.' 
+                : 'Describe your procurement needs to get started.'}
+            </p>
+          </div>
+          <div className="space-y-4 mb-6">
+            <AnimatePresence>
+              {messages.map((message) => (
+                <MessageBubble
+                  key={message.id}
+                  message={message.text}
+                  isUser={message.isUser}
+                  timestamp={message.timestamp}
+                  isTyping={message.isTyping}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+          <ChatBox
+            onSendMessage={handleSendMessage}
+            disabled={isLoading || isPitchMode}
+            placeholder={isAuctionDiscussionMode 
+              ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
+              : "Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"}
+          />
+        </div>
 
         {/* Auction View */}
         {auctionStatus && (
@@ -436,41 +514,16 @@ export default function HomePage() {
           <BiddingFeed events={auctionStatus.events} />
         )}
 
-        {/* Chat Interface - Below Auction (Next Step) */}
-        <div className="mt-12 mb-8">
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-procurvv-dark-text mb-4">
-              {isAuctionDiscussionMode ? 'Discuss the Results' : 'Chat with Procurement Assistant'}
-            </h2>
-            <p className="text-procurvv-dark-muted text-sm">
-              {isAuctionDiscussionMode 
-                ? 'Ask questions about the auction results, winner selection, or procurement details. Say "new auction" to start fresh.' 
-                : 'Describe your procurement needs to get started.'}
-            </p>
+        {/* Post-auction discussion input at the bottom when auction ends */}
+        {auctionStatus && auctionStatus.status === 'ended' && (
+          <div className="mt-8">
+            <ChatBox
+              onSendMessage={handleSendMessage}
+              disabled={isLoading}
+              placeholder="Ask about the auction results... (e.g., 'Why was this vendor selected?')"
+            />
           </div>
-          
-          <div className="space-y-4 mb-6">
-            <AnimatePresence>
-              {messages.map((message) => (
-                <MessageBubble
-                  key={message.id}
-                  message={message.text}
-                  isUser={message.isUser}
-                  timestamp={message.timestamp}
-                  isTyping={message.isTyping}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-          
-          <ChatBox
-            onSendMessage={handleSendMessage}
-            disabled={isLoading || isPitchMode}
-            placeholder={isAuctionDiscussionMode 
-              ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
-              : "Describe your procurement needs... (e.g., 'I need 100 ergonomic chairs under $120 each, delivered in 30 days')"}
-          />
-        </div>
+        )}
       </div>
 
       {/* Results Modal */}

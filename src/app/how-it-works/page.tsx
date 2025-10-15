@@ -64,7 +64,7 @@ export default function HowItWorksPage() {
               <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="text-black font-semibold text-xl">Procurvv</span>
+              <span className="text-black font-semibold text-xl">Procurv</span>
             </a>
             
             {/* Navigation */}
@@ -205,7 +205,7 @@ export default function HowItWorksPage() {
                 <span>See it in action — watch AI agents work in real-time</span>
               </a>
               <button className="bg-gradient-to-r from-gray-700 to-gray-500 text-white px-8 py-3 rounded-lg hover:from-gray-800 hover:to-gray-600 transition-all duration-200 font-medium flex items-center space-x-2">
-                <span>Try Procurvv Free</span>
+                <span>Try Procurv Free</span>
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>

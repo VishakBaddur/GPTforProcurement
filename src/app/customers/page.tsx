@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function CustomersPage() {
   const stats = [
-    { number: "150+", label: "Companies trust Procurvv" },
+    { number: "150+", label: "Companies trust Procurv" },
     { number: "$50M+", label: "Spend managed through our platform" },
     { number: "40%", label: "Average savings cost reduction" },
     { number: "99.9%", label: "Uptime enterprise grade" }
@@ -13,7 +13,7 @@ export default function CustomersPage() {
 
   const testimonials = [
     {
-      quote: "Procurvv reduced our source-to-contract time from 6 weeks to 2 days. The transparency is incredible – I can see exactly what the AI is doing.",
+      quote: "Procurv reduced our source-to-contract time from 6 weeks to 2 days. The transparency is incredible – I can see exactly what the AI is doing.",
       author: "Sarah Chen",
       title: "Chief Procurement Officer",
       company: "TechScale",
@@ -29,7 +29,7 @@ export default function CustomersPage() {
       avatar: "👨‍💼"
     },
     {
-      quote: "We've processed $2.3M in spend through Procurvv. The compliance automation saves our team 20 hours per week.",
+      quote: "We've processed $2.3M in spend through Procurv. The compliance automation saves our team 20 hours per week.",
       author: "Lisa Park",
       title: "Senior Procurement Manager", 
       company: "GlobalTech",
@@ -49,7 +49,7 @@ export default function CustomersPage() {
               <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="text-black font-semibold text-xl">Procurvv</span>
+              <span className="text-black font-semibold text-xl">Procurv</span>
             </a>
             
             {/* Navigation */}
@@ -229,7 +229,7 @@ export default function CustomersPage() {
                   <div className="w-8 h-8 bg-procurvv-accent rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-lg">P</span>
                   </div>
-                  <span className="text-black font-semibold text-xl">Procurvv</span>
+                  <span className="text-black font-semibold text-xl">Procurv</span>
                 </div>
                 <p className="text-procurvv-text text-sm mb-4">
                   The AI copilot that transforms procurement from source-to-pay with intelligent automation.
