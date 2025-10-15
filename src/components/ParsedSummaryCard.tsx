@@ -74,7 +74,7 @@ export default function ParsedSummaryCard({ slots, onStartAuction, onEdit, isLoa
       animate={{ opacity: 1, y: 0 }}
       className="w-full max-w-4xl mx-auto mb-8"
     >
-      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-lg">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-semibold text-gray-800">
             Auction: {slots.item}
@@ -98,7 +98,7 @@ export default function ParsedSummaryCard({ slots, onStartAuction, onEdit, isLoa
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="text-sm text-gray-500 mb-1">Quantity</div>
             <div className="text-lg font-semibold text-gray-800">

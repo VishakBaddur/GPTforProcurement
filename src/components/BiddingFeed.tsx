@@ -45,7 +45,7 @@ export default function BiddingFeed({ events, maxEvents = 20 }: BiddingFeedProps
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-procurvv-card border border-procurvv-border rounded-xl p-6"
+      className="bg-procurvv-card border border-procurvv-border rounded-xl p-4 sm:p-6"
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-procurvv-text">Bidding Feed</h3>
@@ -54,7 +54,7 @@ export default function BiddingFeed({ events, maxEvents = 20 }: BiddingFeedProps
         </div>
       </div>
       
-      <div className="max-h-64 overflow-y-auto space-y-2">
+      <div className="max-h-64 md:max-h-80 overflow-y-auto space-y-2">
         <AnimatePresence>
           {recentEvents.map((event, index) => (
             <motion.div

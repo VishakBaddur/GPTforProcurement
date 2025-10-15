@@ -502,9 +502,9 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50 text-gray-800">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 text-gray-800">
       {/* Left Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col p-4 shadow-sm">
+      <aside className="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-gray-200 flex flex-col p-4 shadow-sm sticky top-0 md:static z-40">
         <div className="flex items-center mb-6">
           <a 
             href="/" 
@@ -597,7 +597,7 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col p-8">
+      <main className="flex-1 flex flex-col p-4 sm:p-6 md:p-8">
         <div className="absolute top-4 right-4">
           <Link href="/upgrade" className="text-sm text-blue-600 hover:underline">
             Free plan • <span className="font-medium">Upgrade</span>
