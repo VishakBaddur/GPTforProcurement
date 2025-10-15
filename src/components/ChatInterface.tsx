@@ -261,6 +261,8 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
     try {
       let response;
       
+      console.log('Sending message:', text, 'Reasoning question:', isReasoningQuestion, 'Auction status:', !!auctionStatus);
+      
     // Route post-auction (or during auction) questions to /api/summarize for richer context.
     // We use it either when it's a reasoning question OR whenever an auction is active.
     if ((isReasoningQuestion || auctionStatus) && auctionStatus && auctionStatus.leader) {
@@ -296,11 +298,13 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
         });
       } else {
         // Regular chat for pre-auction or non-reasoning questions
+        console.log('Calling /api/chat with:', { text, contextSlots: parsedSlots });
         response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text, contextSlots: parsedSlots })
         });
+        console.log('Response status:', response.status);
       }
       
       const data = await response.json();
