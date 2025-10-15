@@ -18,6 +18,7 @@ export default function ChatBox({ onSendMessage, disabled = false, placeholder =
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim() && !disabled) {
+      console.log('ChatBox: Sending message:', message.trim());
       onSendMessage(message.trim());
       setMessage('');
     }
