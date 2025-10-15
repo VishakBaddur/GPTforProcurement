@@ -55,6 +55,7 @@ export async function POST(req: NextRequest) {
     try {
       const apiKey = process.env.GROQ_API_KEY;
       console.log('GROQ_API_KEY exists:', !!apiKey, 'Length:', apiKey?.length || 0);
+      
       if (apiKey) {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -75,8 +76,7 @@ If the user is asking about procurement (items, quantities, budgets, delivery, a
 
 If they're just chatting (greetings, general questions), respond naturally and friendly.
 
-Current context: ${JSON.stringify(base)}
-`
+Current context: ${JSON.stringify(base)}`
               },
               { role: 'user', content: text }
             ]
@@ -92,31 +92,29 @@ Current context: ${JSON.stringify(base)}
           const errorText = await response.text();
           console.log('Groq API error:', response.status, errorText);
         }
-      } catch (groqError) {
-        console.log('Groq API call failed:', groqError);
       }
-      
-      // Try to extract procurement details from the response
-      if (aiMessage) {
-        try {
-          const procurementKeywords = ['item', 'quantity', 'budget', 'delivery', 'warranty', 'laptop', 'chair', 'supplies'];
-          const hasProcurementIntent = procurementKeywords.some(keyword => 
-            text.toLowerCase().includes(keyword) || aiMessage?.toLowerCase().includes(keyword)
-          );
-          
-          if (hasProcurementIntent) {
-            // Try to extract structured data from the LLM response
-            const extracted = parseRequest(text);
-            if (extracted && Object.keys(extracted).length > 0) {
-              Object.assign(base, extracted);
-            }
+    } catch (groqError) {
+      console.log('Groq API call failed:', groqError);
+    }
+    
+    // Try to extract procurement details from the response
+    if (aiMessage) {
+      try {
+        const procurementKeywords = ['item', 'quantity', 'budget', 'delivery', 'warranty', 'laptop', 'chair', 'supplies'];
+        const hasProcurementIntent = procurementKeywords.some(keyword => 
+          text.toLowerCase().includes(keyword) || aiMessage?.toLowerCase().includes(keyword)
+        );
+        
+        if (hasProcurementIntent) {
+          // Try to extract structured data from the LLM response
+          const extracted = parseRequest(text);
+          if (extracted && Object.keys(extracted).length > 0) {
+            Object.assign(base, extracted);
           }
-        } catch (extractError) {
-          console.log('Error extracting procurement details:', extractError);
         }
+      } catch (extractError) {
+        console.log('Error extracting procurement details:', extractError);
       }
-    } catch (err) {
-      console.warn('Groq call failed, falling back to local template.', err);
     }
 
     // If still no message (Groq failed), generate a compact templated reply
@@ -126,24 +124,29 @@ Current context: ${JSON.stringify(base)}
       if (!slots.quantity) missing.push('quantity');
       if (!slots.budget && !slots.maxBudget) missing.push('budget');
       if (!slots.deliveryDays) missing.push('delivery timeline');
-      if (!slots.warrantyMonths && 'warrantyMonths' in (slots as any)) missing.push('warranty (months)');
-
+      if (!slots.warrantyMonths && 'warrantyMonths' in slots) missing.push('warranty (months)');
+      
       if (missing.length > 0) {
-        aiMessage = `Great, we\'re close. I still need: ${missing.join(', ')}. You can continue typing the missing values. If you already have a vendor list, you can also upload it with the paperclip (CSV/JSON with columns supplier_name,email,base_price).`;
+        aiMessage = `Great, we're close. I still need: ${missing.join(', ')}. You can continue typing the missing values. If you already have a vendor list, you can also upload it with the paperclip (CSV/JSON with columns supplier_name,email,base_price).`;
       } else {
-        aiMessage = `Perfect. I can create the RFQ preview for ${slots.quantity} ${slots.item} (budget $${(slots.budget || slots.maxBudget)}, delivery in ${slots.deliveryDays} days).
+        aiMessage = `Perfect. I can create the RFQ preview for ${slots.quantity} ${slots.item} (budget $${slots.budget || slots.maxBudget}, delivery in ${slots.deliveryDays} days).
 
-Option A — Upload your vendor list now (paperclip).\nOption B — Start the reverse auction without a list (I\'ll use sample vendors for the demo).\n
+Option A — Upload your vendor list now (paperclip).
+Option B — Start the reverse auction without a list (I'll use sample vendors for the demo).
+
 Reply with "Upload" or "Start auction".`;
       }
     }
-    
+
     // Add telemetry (console log for demo)
-    console.log('chat_message_submitted', { text, parsedSlots: slots });
-    
+    console.log('chat_message_submitted', {
+      text,
+      parsedSlots: slots
+    });
+
     // Decide next action (preview if slots look good)
     const isReady = !!(slots.item && slots.quantity && (slots.budget || slots.maxBudget) && slots.deliveryDays);
-
+    
     return NextResponse.json({
       action: isReady ? 'preview' : 'clarify',
       message: aiMessage,
