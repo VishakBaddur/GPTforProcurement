@@ -85,9 +85,6 @@ Current context: ${JSON.stringify(base)}
           const data = await response.json();
           aiMessage = data.choices?.[0]?.message?.content || null;
           console.log('Groq response received:', aiMessage?.substring(0, 100) + '...');
-        } else {
-          console.log('Groq API error:', response.status, response.statusText);
-        }
           
           // Try to extract procurement details from the response
           try {
@@ -104,13 +101,15 @@ Current context: ${JSON.stringify(base)}
               }
             }
           } catch {}
+        } else {
+          console.log('Groq API error:', response.status, response.statusText);
         }
       }
     } catch (err) {
       console.warn('Groq call failed, falling back to local template.', err);
     }
 
-    // If still no message (Groq failed or not general chat), generate a compact templated reply
+    // If still no message (Groq failed), generate a compact templated reply
     if (!aiMessage) {
       const missing: string[] = [];
       if (!slots.item) missing.push('item');
