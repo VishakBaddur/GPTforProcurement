@@ -841,7 +841,15 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
           )}
 
           {/* Show chat input only when not in the welcome state */}
-          {!(messages.length === 0 && !auctionStatus && !parsedSlots) && (
+          {(() => {
+            const shouldShow = !(messages.length === 0 && !auctionStatus && !parsedSlots);
+            console.log('ChatInterface: Should show chat input?', shouldShow, {
+              messagesLength: messages.length,
+              auctionStatus: !!auctionStatus,
+              parsedSlots: !!parsedSlots
+            });
+            return shouldShow;
+          })() && (
             <div className="mb-12">
               <ChatBox
                 onSendMessage={handleSendMessage}
