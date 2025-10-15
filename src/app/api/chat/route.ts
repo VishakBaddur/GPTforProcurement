@@ -97,22 +97,22 @@ Current context: ${JSON.stringify(base)}
       }
       
       // Try to extract procurement details from the response
-          try {
-            const procurementKeywords = ['item', 'quantity', 'budget', 'delivery', 'warranty', 'laptop', 'chair', 'supplies'];
-            const hasProcurementIntent = procurementKeywords.some(keyword => 
-              text.toLowerCase().includes(keyword) || aiMessage?.toLowerCase().includes(keyword)
-            );
-            
-            if (hasProcurementIntent) {
-              // Try to extract structured data from the LLM response
-              const extracted = parseRequest(text);
-              if (extracted && Object.keys(extracted).length > 0) {
-                Object.assign(base, extracted);
-              }
+      if (aiMessage) {
+        try {
+          const procurementKeywords = ['item', 'quantity', 'budget', 'delivery', 'warranty', 'laptop', 'chair', 'supplies'];
+          const hasProcurementIntent = procurementKeywords.some(keyword => 
+            text.toLowerCase().includes(keyword) || aiMessage?.toLowerCase().includes(keyword)
+          );
+          
+          if (hasProcurementIntent) {
+            // Try to extract structured data from the LLM response
+            const extracted = parseRequest(text);
+            if (extracted && Object.keys(extracted).length > 0) {
+              Object.assign(base, extracted);
             }
-          } catch {}
-        } else {
-          console.log('Groq API error:', response.status, response.statusText);
+          }
+        } catch (extractError) {
+          console.log('Error extracting procurement details:', extractError);
         }
       }
     } catch (err) {
