@@ -284,15 +284,18 @@ export default function LandingPage({ onStartChat }: LandingPageProps) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Please enter your email"
-                        className="w-full px-6 py-4 pr-32 text-lg bg-white border border-gray-200 rounded-xl text-black placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
+                        className="w-full pl-6 pr-40 sm:pr-44 py-4 text-base sm:text-lg bg-white border border-gray-200 rounded-xl text-black placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
                         autoFocus
                       />
                       <button
                         type="submit"
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium"
                       >
                         Get Instant Access
                       </button>
+                      <div className="absolute left-6 -top-6 sm:-top-7 text-white/90 text-xs sm:text-sm">
+                        Please enter your email
+                      </div>
                     </div>
                   </form>
                 )}
