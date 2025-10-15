@@ -106,25 +106,6 @@ export async function POST(req: NextRequest) {
       console.warn('Groq call failed, falling back to local template.', err);
     }
 
-    // If Groq not available or failed, generate a compact templated reply
-    if (!aiMessage) {
-      const missing: string[] = [];
-      if (!slots.item) missing.push('item');
-      if (!slots.quantity) missing.push('quantity');
-      if (!slots.budget && !slots.maxBudget) missing.push('budget');
-      if (!slots.deliveryDays) missing.push('delivery timeline');
-      if (!slots.warrantyMonths && 'warrantyMonths' in (slots as any)) missing.push('warranty (months)');
-
-      if (missing.length > 0) {
-        aiMessage = `Great, we\'re close. I still need: ${missing.join(', ')}. You can continue typing the missing values. If you already have a vendor list, you can also upload it with the paperclip (CSV/JSON with columns supplier_name,email,base_price).`;
-      } else {
-        aiMessage = `Perfect. I can create the RFQ preview for ${slots.quantity} ${slots.item} (budget $${(slots.budget || slots.maxBudget)}, delivery in ${slots.deliveryDays} days).
-
-Option A — Upload your vendor list now (paperclip).\nOption B — Start the reverse auction without a list (I\'ll use sample vendors for the demo).\n
-Reply with “Upload” or “Start auction”.`;
-      }
-    }
-
     // General chat fallback: if nothing changed in slots and user isn't asking for upload/start, let the LLM reply normally
     const userAskedGeneral = !/upload|start auction|begin auction|launch auction/i.test(text);
     const noSlotProgress = Object.keys(parseRequest(text) || {}).length === 0;
@@ -149,6 +130,25 @@ Reply with “Upload” or “Start auction”.`;
           if (general) aiMessage = general;
         }
       } catch {}
+    }
+
+    // If still no message (Groq failed or not general chat), generate a compact templated reply
+    if (!aiMessage) {
+      const missing: string[] = [];
+      if (!slots.item) missing.push('item');
+      if (!slots.quantity) missing.push('quantity');
+      if (!slots.budget && !slots.maxBudget) missing.push('budget');
+      if (!slots.deliveryDays) missing.push('delivery timeline');
+      if (!slots.warrantyMonths && 'warrantyMonths' in (slots as any)) missing.push('warranty (months)');
+
+      if (missing.length > 0) {
+        aiMessage = `Great, we\'re close. I still need: ${missing.join(', ')}. You can continue typing the missing values. If you already have a vendor list, you can also upload it with the paperclip (CSV/JSON with columns supplier_name,email,base_price).`;
+      } else {
+        aiMessage = `Perfect. I can create the RFQ preview for ${slots.quantity} ${slots.item} (budget $${(slots.budget || slots.maxBudget)}, delivery in ${slots.deliveryDays} days).
+
+Option A — Upload your vendor list now (paperclip).\nOption B — Start the reverse auction without a list (I\'ll use sample vendors for the demo).\n
+Reply with "Upload" or "Start auction".`;
+      }
     }
     
     // Add telemetry (console log for demo)
