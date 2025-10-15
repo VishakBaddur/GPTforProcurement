@@ -840,26 +840,16 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
             </div>
           )}
 
-          {/* Show chat input only when not in the welcome state */}
-          {(() => {
-            const shouldShow = !(messages.length === 0 && !auctionStatus && !parsedSlots);
-            console.log('ChatInterface: Should show chat input?', shouldShow, {
-              messagesLength: messages.length,
-              auctionStatus: !!auctionStatus,
-              parsedSlots: !!parsedSlots
-            });
-            return shouldShow;
-          })() && (
-            <div className="mb-12">
-              <ChatBox
-                onSendMessage={handleSendMessage}
-                disabled={isLoading}
-                placeholder={isAuctionDiscussionMode 
-                  ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
-                  : "Describe your procurement needs or upload a supplier CSV (paperclip icon)"}
-              />
-            </div>
-          )}
+          {/* Always show chat input */}
+          <div className="mb-12">
+            <ChatBox
+              onSendMessage={handleSendMessage}
+              disabled={isLoading}
+              placeholder={isAuctionDiscussionMode 
+                ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
+                : "Describe your procurement needs or upload a supplier CSV (paperclip icon)"}
+            />
+          </div>
         </div>
 
         {/* Results Modal */}
