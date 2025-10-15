@@ -840,16 +840,19 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
             </div>
           )}
 
-          {/* Always show chat input */}
-          <div className="mb-12">
-            <ChatBox
-              onSendMessage={handleSendMessage}
-              disabled={isLoading}
-              placeholder={isAuctionDiscussionMode 
-                ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
-                : "Describe your procurement needs or upload a supplier CSV (paperclip icon)"}
-            />
-          </div>
+          {/* Show chat input when there are messages or auction is active */}
+          {messages.length > 0 && (
+            <div className="mb-12">
+              <ChatBox
+                onSendMessage={handleSendMessage}
+                disabled={isLoading}
+                placeholder={isAuctionDiscussionMode 
+                  ? "Ask about the auction results... (e.g., 'Why was this vendor selected?', 'What are their conditions?')" 
+                  : "Describe your procurement needs or upload a supplier CSV (paperclip icon)"}
+              />
+            </div>
+          )}
+
         </div>
 
         {/* Results Modal */}
