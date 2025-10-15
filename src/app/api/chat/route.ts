@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
     let aiMessage: string | null = null;
     try {
       const apiKey = process.env.GROQ_API_KEY;
+      console.log('GROQ_API_KEY exists:', !!apiKey, 'Length:', apiKey?.length || 0);
       if (apiKey) {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -83,6 +84,10 @@ Current context: ${JSON.stringify(base)}
         if (response.ok) {
           const data = await response.json();
           aiMessage = data.choices?.[0]?.message?.content || null;
+          console.log('Groq response received:', aiMessage?.substring(0, 100) + '...');
+        } else {
+          console.log('Groq API error:', response.status, response.statusText);
+        }
           
           // Try to extract procurement details from the response
           try {
