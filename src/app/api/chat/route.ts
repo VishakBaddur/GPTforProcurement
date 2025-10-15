@@ -52,9 +52,15 @@ export async function POST(req: NextRequest) {
 
     // Always try Groq first - let the LLM decide how to respond
     let aiMessage: string | null = null;
+    
+    // Test if GROQ_API_KEY is working
+    const apiKey = process.env.GROQ_API_KEY;
+    console.log('=== GROQ_API_KEY TEST ===');
+    console.log('GROQ_API_KEY exists:', !!apiKey);
+    console.log('GROQ_API_KEY length:', apiKey?.length || 0);
+    console.log('GROQ_API_KEY first 10 chars:', apiKey?.substring(0, 10) || 'undefined');
+    
     try {
-      const apiKey = process.env.GROQ_API_KEY;
-      console.log('GROQ_API_KEY exists:', !!apiKey, 'Length:', apiKey?.length || 0);
       
       if (apiKey) {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
