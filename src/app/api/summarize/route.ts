@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { round, topBids, context, leader, runnerUp, priceGap, complianceNotes } = body || {};
+    const { round, topBids, context, leader, runnerUp, priceGap, complianceNotes, history } = body || {};
 
     // Build a prompt that answers the user's specific question
-    const prompt = `You are a procurement analyst explaining auction results. Answer the user's question about why the winner was chosen.
+    const prompt = `You are a procurement analyst explaining auction results. Maintain context across questions. Answer succinctly but completely.
 
-User's question: "${context || 'Why was the winner chosen?'}"
+User's current question: "${context || 'Why was the winner chosen?'}"
 
 Auction data:
 - Round: ${round}
@@ -36,6 +36,7 @@ Provide a clear, detailed explanation of the reasoning behind the selection.`;
             max_tokens: 512,
             messages: [
               { role: 'system', content: 'You are a helpful procurement analyst. Provide clear, detailed explanations of auction decisions based on the data provided.' },
+              ...(Array.isArray(history) ? history : []),
               { role: 'user', content: prompt }
             ]
           })

@@ -261,9 +261,10 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
     try {
       let response;
       
-      // Route reasoning questions to /api/summarize for richer context
-      if (isReasoningQuestion && auctionStatus && auctionStatus.leader) {
-        const sortedVendors = auctionStatus.vendors.sort((a, b) => a.currentBid - b.currentBid);
+    // Route post-auction (or during auction) questions to /api/summarize for richer context.
+    // We use it either when it's a reasoning question OR whenever an auction is active.
+    if ((isReasoningQuestion || auctionStatus) && auctionStatus && auctionStatus.leader) {
+      const sortedVendors = auctionStatus.vendors.sort((a, b) => a.currentBid - b.currentBid);
         const runnerUp = sortedVendors.find(v => v.id !== auctionStatus.leader?.id);
         
         response = await fetch('/api/summarize', {
@@ -288,6 +289,7 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
               compliant: v.isCompliant
             })),
             context: text,
+            history: messages.slice(-10).map(m => ({ role: m.isUser ? 'user' : 'assistant', content: m.text })),
             complianceNotes: sortedVendors.filter(v => v.isCompliant).length > 0 ? 
               `${sortedVendors.filter(v => v.isCompliant).length} compliant vendors` : 'No compliance issues'
           })
