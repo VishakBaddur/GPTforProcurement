@@ -106,10 +106,13 @@ export async function POST(req: NextRequest) {
       console.warn('Groq call failed, falling back to local template.', err);
     }
 
-    // General chat fallback: if nothing changed in slots and user isn't asking for upload/start, let the LLM reply normally
+    // General chat fallback: for simple greetings or non-procurement messages
+    const isSimpleGreeting = /^(hi|hello|hey|good morning|good afternoon|good evening|thanks|thank you|bye|goodbye)$/i.test(text.trim());
     const userAskedGeneral = !/upload|start auction|begin auction|launch auction/i.test(text);
     const noSlotProgress = Object.keys(parseRequest(text) || {}).length === 0;
-    if (process.env.GROQ_API_KEY && userAskedGeneral && noSlotProgress) {
+    
+    // Use general chat for simple greetings or when user isn't making procurement progress
+    if (process.env.GROQ_API_KEY && (isSimpleGreeting || (userAskedGeneral && noSlotProgress))) {
       try {
         const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
