@@ -92,8 +92,11 @@ Current context: ${JSON.stringify(base)}
           const errorText = await response.text();
           console.log('Groq API error:', response.status, errorText);
         }
-          
-          // Try to extract procurement details from the response
+      } catch (groqError) {
+        console.log('Groq API call failed:', groqError);
+      }
+      
+      // Try to extract procurement details from the response
           try {
             const procurementKeywords = ['item', 'quantity', 'budget', 'delivery', 'warranty', 'laptop', 'chair', 'supplies'];
             const hasProcurementIntent = procurementKeywords.some(keyword => 
