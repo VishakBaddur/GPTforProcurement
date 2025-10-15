@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     const slots = base;
     const validation = validateSlots(slots);
 
-    // Try Groq first; fall back to mock-style deterministic response on error
+    // Always try Groq first - let the LLM decide how to respond
     let aiMessage: string | null = null;
     try {
       const apiKey = process.env.GROQ_API_KEY;
@@ -61,42 +61,41 @@ export async function POST(req: NextRequest) {
           },
           body: JSON.stringify({
             model: 'llama-3.1-8b-instruct',
-            temperature: 0.2,
-            max_tokens: 384,
+            temperature: 0.3,
+            max_tokens: 512,
             messages: [
               {
                 role: 'system',
-                content:
-                  'You are Procurv\'s procurement copilot. Extract structured fields and then provide a short user-facing reply. First, produce a compact JSON object on the first line only with keys: item (string), quantity (number|null), budget (number|null), deliveryDays (number|null), warrantyMonths (number|null). After the JSON, add a single short sentence guiding next steps.'
+                content: `You are Procurv's AI procurement assistant. 
+
+If the user is asking about procurement (items, quantities, budgets, delivery, auctions), help them with procurement tasks and extract relevant details.
+
+If they're just chatting (greetings, general questions), respond naturally and friendly.
+
+Current context: ${JSON.stringify(base)}
+`
               },
-              { role: 'user', content: `Context so far: ${JSON.stringify(base)}\nUser message: ${text}` }
+              { role: 'user', content: text }
             ]
           })
         });
 
         if (response.ok) {
           const data = await response.json();
-          const raw = data.choices?.[0]?.message?.content || '';
-          aiMessage = raw || null;
-          // Try to extract JSON from the start of the message
+          aiMessage = data.choices?.[0]?.message?.content || null;
+          
+          // Try to extract procurement details from the response
           try {
-            const start = raw.indexOf('{');
-            const end = raw.lastIndexOf('}');
-            if (start >= 0 && end > start) {
-              const jsonStr = raw.slice(start, end + 1);
-              const parsed = JSON.parse(jsonStr);
-              if (parsed && typeof parsed === 'object') {
-                // Map LLM fields to slot keys
-                const llmSlots: any = {};
-                if (parsed.item !== undefined) llmSlots.item = parsed.item;
-                if (parsed.quantity !== undefined) llmSlots.quantity = Number(parsed.quantity) || null;
-                if (parsed.budget !== undefined) {
-                  llmSlots.budget = Number(parsed.budget) || null;
-                  llmSlots.maxBudget = llmSlots.budget;
-                }
-                if (parsed.deliveryDays !== undefined) llmSlots.deliveryDays = Number(parsed.deliveryDays) || null;
-                if (parsed.warrantyMonths !== undefined) llmSlots.warrantyMonths = Number(parsed.warrantyMonths) || undefined;
-                Object.assign(base, llmSlots);
+            const procurementKeywords = ['item', 'quantity', 'budget', 'delivery', 'warranty', 'laptop', 'chair', 'supplies'];
+            const hasProcurementIntent = procurementKeywords.some(keyword => 
+              text.toLowerCase().includes(keyword) || aiMessage?.toLowerCase().includes(keyword)
+            );
+            
+            if (hasProcurementIntent) {
+              // Try to extract structured data from the LLM response
+              const extracted = parseRequest(text);
+              if (extracted && Object.keys(extracted).length > 0) {
+                Object.assign(base, extracted);
               }
             }
           } catch {}
@@ -104,35 +103,6 @@ export async function POST(req: NextRequest) {
       }
     } catch (err) {
       console.warn('Groq call failed, falling back to local template.', err);
-    }
-
-    // General chat fallback: for simple greetings or non-procurement messages
-    const isSimpleGreeting = /^(hi|hello|hey|good morning|good afternoon|good evening|thanks|thank you|bye|goodbye)$/i.test(text.trim());
-    const userAskedGeneral = !/upload|start auction|begin auction|launch auction/i.test(text);
-    const noSlotProgress = Object.keys(parseRequest(text) || {}).length === 0;
-    
-    // Use general chat for simple greetings or when user isn't making procurement progress
-    if (process.env.GROQ_API_KEY && (isSimpleGreeting || (userAskedGeneral && noSlotProgress))) {
-      try {
-        const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
-          body: JSON.stringify({
-            model: 'llama-3.1-8b-instruct',
-            temperature: 0.4,
-            max_tokens: 384,
-            messages: [
-              { role: 'system', content: 'You are a concise, friendly assistant. If procurement context exists, be helpful but do not force the user back to forms.' },
-              { role: 'user', content: text }
-            ]
-          })
-        });
-        if (resp.ok) {
-          const d = await resp.json();
-          const general = d.choices?.[0]?.message?.content;
-          if (general) aiMessage = general;
-        }
-      } catch {}
     }
 
     // If still no message (Groq failed or not general chat), generate a compact templated reply
