@@ -53,24 +53,24 @@ export async function POST(req: NextRequest) {
     // Always try Groq first - let the LLM decide how to respond
     let aiMessage: string | null = null;
     
-    // Test if OPENAI_API_KEY is working
-    const apiKey = process.env.OPENAI_API_KEY;
-    console.log('=== OPENAI_API_KEY TEST ===');
-    console.log('OPENAI_API_KEY exists:', !!apiKey);
-    console.log('OPENAI_API_KEY length:', apiKey?.length || 0);
-    console.log('OPENAI_API_KEY first 10 chars:', apiKey?.substring(0, 10) || 'undefined');
+    // Test if GROQ_API_KEY is working
+    const apiKey = process.env.GROQ_API_KEY;
+    console.log('=== GROQ_API_KEY TEST ===');
+    console.log('GROQ_API_KEY exists:', !!apiKey);
+    console.log('GROQ_API_KEY length:', apiKey?.length || 0);
+    console.log('GROQ_API_KEY first 10 chars:', apiKey?.substring(0, 10) || 'undefined');
     
     try {
       
       if (apiKey) {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'llama-3.1-8b-instant',
             temperature: 0.3,
             max_tokens: 512,
             messages: [
@@ -89,18 +89,18 @@ Current context: ${JSON.stringify(base)}`
           })
         });
 
-        console.log('OpenAI API response status:', response.status);
+        console.log('Groq API response status:', response.status);
         if (response.ok) {
           const data = await response.json();
           aiMessage = data.choices?.[0]?.message?.content || null;
-          console.log('OpenAI response received:', aiMessage?.substring(0, 100) + '...');
+          console.log('Groq response received:', aiMessage?.substring(0, 100) + '...');
         } else {
           const errorText = await response.text();
-          console.log('OpenAI API error:', response.status, errorText);
+          console.log('Groq API error:', response.status, errorText);
         }
       }
-    } catch (openaiError) {
-      console.log('OpenAI API call failed:', openaiError);
+    } catch (groqError) {
+      console.log('Groq API call failed:', groqError);
     }
     
     // Try to extract procurement details from the response
@@ -123,7 +123,7 @@ Current context: ${JSON.stringify(base)}`
       }
     }
 
-    // If still no message (OpenAI failed), generate a compact templated reply
+    // If still no message (Groq failed), generate a compact templated reply
     if (!aiMessage) {
       const missing: string[] = [];
       if (!slots.item) missing.push('item');
