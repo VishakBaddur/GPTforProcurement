@@ -359,6 +359,9 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
       if (startResponse.ok) {
         // Start polling for auction status
         startAuctionPolling(auctionId);
+      } else {
+        const errorData = await startResponse.json();
+        addMessage(`❌ ${errorData.error || 'Failed to start auction'}`, false);
       }
     } catch (error) {
       console.error('Error starting auction:', error);

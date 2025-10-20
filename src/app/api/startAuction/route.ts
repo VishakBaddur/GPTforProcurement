@@ -16,10 +16,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
     }
 
-    // Select vendors for this auction: prefer provided vendors, else mock selection
-    const vendorsRaw = Array.isArray(providedVendors) && providedVendors.length > 0
-      ? providedVendors
-      : selectVendorsForAuction(auction.buyerSlots, options.vendorCount || 4);
+    // Check if vendors are provided
+    if (!Array.isArray(providedVendors) || providedVendors.length === 0) {
+      return NextResponse.json({ 
+        error: 'No vendors provided. Please upload a supplier list or add vendors before starting the auction.' 
+      }, { status: 400 });
+    }
+
+    const vendorsRaw = providedVendors;
 
     // Normalize uploaded vendors so the engine can simulate bidding dynamics
     const vendors = vendorsRaw.map((v: any, idx: number) => {
