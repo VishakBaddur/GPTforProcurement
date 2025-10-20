@@ -92,7 +92,7 @@ export function parseRequest(text: string): ParsedSlots {
     budget, 
     maxBudget: budget, // Use budget as maxBudget for now
     deliveryDays, 
-    warranty: warrantyMatch ? warrantyMatch[0] : null,
+    warranty: warrantyMonths ? `${warrantyMonths} months` : null,
     warrantyMonths: warrantyMonths || undefined
   };
 }
