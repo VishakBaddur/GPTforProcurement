@@ -78,11 +78,15 @@ export async function POST(req: NextRequest) {
                 role: 'system',
                 content: `You are Procurv's AI procurement assistant. 
 
+IMPORTANT: Only respond to the CURRENT user message. Do not reference previous auctions or results unless explicitly asked.
+
 If the user is asking about procurement (items, quantities, budgets, delivery, auctions), help them with procurement tasks and extract relevant details.
 
 If they're just chatting (greetings, general questions), respond naturally and friendly.
 
-Current context: ${JSON.stringify(base)}`
+Current procurement context: ${JSON.stringify(base)}
+
+Remember: Focus only on the current conversation, not previous auctions.`
               },
               { role: 'user', content: text }
             ]

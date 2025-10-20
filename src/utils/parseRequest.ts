@@ -9,11 +9,14 @@ export interface ParsedSlots {
 }
 
 export function parseRequest(text: string): ParsedSlots {
-  // More specific quantity parsing - look for numbers followed by item words
+  // More flexible quantity parsing - look for numbers in procurement context
   const qtyPatterns = [
     /(\d{1,6})\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i,
     /(?:need|want|require|looking for|procure|purchase|buy)\s*(\d{1,6})\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i,
-    /(\d{1,6})\s*(?:of|for)\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i
+    /(\d{1,6})\s*(?:of|for)\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i,
+    // More general patterns for procurement context
+    /(?:need|want|require|looking for|procure|purchase|buy)\s*(\d{1,6})/i,
+    /(\d{1,6})\s*(?:units?|pieces?|pcs?|items?)/i
   ];
   
   let qty = null;
