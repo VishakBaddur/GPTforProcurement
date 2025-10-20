@@ -23,6 +23,10 @@ Provide a clear, detailed explanation of the reasoning behind the selection.`;
     let message: string | null = null;
     try {
       const apiKey = process.env.GROQ_API_KEY;
+      console.log('=== SUMMARIZE API DEBUG ===');
+      console.log('GROQ_API_KEY exists:', !!apiKey);
+      console.log('Request body:', { round, topBids, context, leader, runnerUp, priceGap, complianceNotes });
+      
       if (apiKey) {
         const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -31,7 +35,7 @@ Provide a clear, detailed explanation of the reasoning behind the selection.`;
             Authorization: `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            model: 'llama-3.1-8b-instruct',
+            model: 'llama-3.1-8b-instant',
             temperature: 0.2,
             max_tokens: 512,
             messages: [
@@ -41,9 +45,14 @@ Provide a clear, detailed explanation of the reasoning behind the selection.`;
             ]
           })
         });
+        console.log('Groq API response status:', resp.status);
         if (resp.ok) {
           const data = await resp.json();
           message = data.choices?.[0]?.message?.content || null;
+          console.log('Groq response received:', message?.substring(0, 100) + '...');
+        } else {
+          const errorText = await resp.text();
+          console.log('Groq API error:', resp.status, errorText);
         }
       }
     } catch (err) {
