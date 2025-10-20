@@ -9,17 +9,31 @@ export interface ParsedSlots {
 }
 
 export function parseRequest(text: string): ParsedSlots {
-  // More flexible quantity parsing - just look for numbers
-  const qtyMatch = text.match(/(\d{1,6})(?:\s*(?:units|pieces|pcs|items|chairs|desks|tables|etc\.?))?/i);
-  const qty = qtyMatch ? parseInt(qtyMatch[1], 10) : null;
+  // More specific quantity parsing - look for numbers followed by item words
+  const qtyPatterns = [
+    /(\d{1,6})\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i,
+    /(?:need|want|require|looking for|procure|purchase|buy)\s*(\d{1,6})\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i,
+    /(\d{1,6})\s*(?:of|for)\s*(?:laptops?|chairs?|desks?|tables?|units?|pieces?|pcs?|items?)/i
+  ];
+  
+  let qty = null;
+  for (const pattern of qtyPatterns) {
+    const match = text.match(pattern);
+    if (match) {
+      qty = parseInt(match[1], 10);
+      break;
+    }
+  }
 
-  // More flexible budget parsing
+  // More specific budget parsing - prioritize budget keywords
   const budgetPatterns = [
     /(?:budget|my budget)\s*(?:is\s*)?\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
     /under\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
     /below\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
     /<=?\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i,
-    /\$(\d+(?:,\d{3})*(?:\.\d+)?)/i
+    /\$(\d+(?:,\d{3})*(?:\.\d+)?)/i,
+    // Only match standalone $ amounts if they're clearly budget context
+    /(?:per\s+unit|each|per\s+laptop|per\s+chair)\s*\$?(\d+(?:,\d{3})*(?:\.\d+)?)/i
   ];
   
   let budget = null;
@@ -51,10 +65,23 @@ export function parseRequest(text: string): ParsedSlots {
     }
   }
 
-  const warrantyMatch = text.match(/(\d+)\s*(year|years|month|months)/i);
-  const warrantyMonths = warrantyMatch ? 
-    (warrantyMatch[2].toLowerCase().startsWith('year') ? parseInt(warrantyMatch[1]) * 12 : parseInt(warrantyMatch[1])) : 
-    null;
+  // More specific warranty parsing - look for warranty context
+  const warrantyPatterns = [
+    /(?:warranty|warranties)\s*(?:of\s*)?(\d+)\s*(?:year|years|month|months)/i,
+    /(\d+)\s*(?:year|years|month|months)\s*(?:warranty|warranties)/i,
+    /(?:warranty|warranties)\s*(?:for\s*)?(\d+)\s*(?:year|years|month|months)/i
+  ];
+  
+  let warrantyMonths = null;
+  for (const pattern of warrantyPatterns) {
+    const match = text.match(pattern);
+    if (match) {
+      const value = parseInt(match[1]);
+      const unit = match[2] || match[3] || match[4]; // Get the unit from any capture group
+      warrantyMonths = unit && unit.toLowerCase().startsWith('year') ? value * 12 : value;
+      break;
+    }
+  }
 
   // Extract item description by removing quantity, budget, delivery, and warranty keywords
   const item = extractItemFromText(text);
