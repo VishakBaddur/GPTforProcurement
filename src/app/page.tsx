@@ -224,6 +224,10 @@ export default function HomePage() {
         const raw = localStorage.getItem('procurv-uploaded-suppliers');
         if (raw) uploadedVendors = JSON.parse(raw);
       } catch {}
+      
+      console.log('=== MAIN PAGE DEBUG ===');
+      console.log('uploadedVendors:', uploadedVendors);
+      console.log('uploadedVendors length:', uploadedVendors?.length);
 
       // Create auction
       const createResponse = await fetch('/api/createAuction', {

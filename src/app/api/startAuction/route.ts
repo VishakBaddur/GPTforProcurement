@@ -16,12 +16,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Auction not found' }, { status: 404 });
     }
 
+    // Debug logging
+    console.log('=== START AUCTION DEBUG ===');
+    console.log('providedVendors:', providedVendors);
+    console.log('Array.isArray(providedVendors):', Array.isArray(providedVendors));
+    console.log('providedVendors.length:', providedVendors?.length);
+    
     // Check if vendors are provided
     if (!Array.isArray(providedVendors) || providedVendors.length === 0) {
+      console.log('❌ No vendors provided - returning error');
       return NextResponse.json({ 
         error: 'No vendors provided. Please upload a supplier list or add vendors before starting the auction.' 
       }, { status: 400 });
     }
+    
+    console.log('✅ Vendors provided - proceeding with auction');
 
     const vendorsRaw = providedVendors;
 

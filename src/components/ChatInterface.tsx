@@ -338,6 +338,10 @@ export default function ChatInterface({ userEmail }: ChatInterfaceProps) {
         const raw = localStorage.getItem('procurv-uploaded-suppliers');
         if (raw) uploadedVendors = JSON.parse(raw);
       } catch {}
+      
+      console.log('=== FRONTEND DEBUG ===');
+      console.log('uploadedVendors:', uploadedVendors);
+      console.log('uploadedVendors length:', uploadedVendors?.length);
 
       // Create auction
       const createResponse = await fetch('/api/createAuction', {

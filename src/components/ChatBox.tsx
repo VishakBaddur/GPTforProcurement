@@ -75,7 +75,7 @@ export default function ChatBox({ onSendMessage, disabled = false, placeholder =
             <input
               ref={fileInputRef}
               type="file"
-              accept=".csv,.xlsx,.xls,.json,.txt"
+              accept="*/*"
               onChange={handleFileUpload}
               className="hidden"
             />
